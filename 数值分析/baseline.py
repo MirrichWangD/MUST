@@ -12,6 +12,7 @@
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 from pyproj import Transformer
 
 
@@ -45,7 +46,7 @@ for lat, lon in zip(latitude, longitude):
 # convert to array
 x = np.array(x_lst)
 y = np.array(y_lst)
-d = accuracy
+d = 100 - accuracy
 
 
 # Min-Max standardization
@@ -57,15 +58,17 @@ x = (x - x_min) / (x_max - x_min)
 y = (y - y_min) / (y_max - y_min)
 d = (d - d_min) / (d_max - d_min)
 
+plt.plot(longitude, latitude, ".")
+
 
 """======================
 @@@ Least Squares Method
 ======================"""
 
 
-A = np.concatenate([[x[1:] - x[:-1]], [y[1:] - y[:-1]]], axis=0).T
+A = 2*np.concatenate([[x[1:] - x[:-1]], [y[1:] - y[:-1]]], axis=0).T
 
-B = d[1:] ** 2 - d[:-1] ** 2 - (x[1:] ** 2 + y[:-1] ** 2) + (x[1:] ** 2 + x[:-1] ** 2)
+B = d[:-1] ** 2 - d[1:] ** 2 - (x[:-1] ** 2 + y[:-1] ** 2) + (x[:-1] ** 2 + y[:-1] ** 2)
 
 # solution
 X = np.linalg.inv(A.T @ A) @ (A.T @ B)
@@ -79,3 +82,6 @@ lat_pred, lon_pred = utm2wgs.transform(x_pred, y_pred)
 
 print("x_pred: %f, y_pred: %f" % (x_pred, y_pred))
 print("lat_pred: %f, lon_pred: %f" % (lat_pred, lon_pred))
+
+plt.plot(lon_pred, lat_pred, "r.")
+plt.show()
