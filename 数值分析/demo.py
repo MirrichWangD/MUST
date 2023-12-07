@@ -2,6 +2,10 @@ import math
 import numpy as np
 
 
+a = 6378137.0
+f = 1 / 298.257223565
+
+
 # latitude:纬度 longitude:经度 altitude:海拔
 def LLA_to_XYZ(latitude, longitude, altitude):
     # 经纬度的余弦值
@@ -21,6 +25,12 @@ def LLA_to_XYZ(latitude, longitude, altitude):
     X = (rad * C + h) * cosLat * cosLon
     Y = (rad * C + h) * cosLat * sinLon
     Z = (rad * S + h) * sinLat
+
+    N = a / np.sqrt(1 - f * (2 - f) * sinLat**2)
+
+    X = (N + altitude) * cosLat * cosLon
+    Y = (N + altitude) * cosLat * sinLon
+    Z = (N * (1 - f) ** 2 + altitude) * sinLat
 
     return np.array([X, Y, Z])
 
