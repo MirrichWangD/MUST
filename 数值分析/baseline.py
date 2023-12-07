@@ -23,7 +23,7 @@ from pyproj import Transformer
 
 
 a = 6378137.0
-f = 1 / 298.257223565
+f = 1/298.257223565
 
 
 """=========================
@@ -136,16 +136,6 @@ y = (yy - y_min) / (y_max - y_min)
 z = (zz - z_min) / (z_max - z_min)
 d = (d - d_min) / (d_max - d_min)
 
-# Z-score standardization
-# x_mean, x_std = np.mean(xx), np.std(xx)
-# y_mean, y_std = np.mean(yy), np.std(yy)
-# z_mean, z_std = np.mean(zz), np.std(zz)
-# d_mean, d_std = np.mean(d), np.std(d)
-
-# x = (xx - x_mean) / x_std
-# y = (yy - y_mean) / y_std
-# z = (zz - z_mean) / z_std
-# d = (d - d_mean) / d_std
 
 plt.plot(longitude, latitude, "b*")
 
@@ -165,9 +155,6 @@ X = np.linalg.inv(A.T @ A) @ (A.T @ B)
 x_pred = X[0] * (x_max - x_min) + x_min
 y_pred = X[1] * (y_max - y_min) + y_min
 z_pred = X[2] * (z_max - z_min) + z_min
-# x_pred = X[0] * x_std + x_mean
-# y_pred = X[1] * y_std + y_mean
-# z_pred = X[2] * z_std + z_mean
 
 # restore latitude, longitude
 # lat_pred, lon_pred = utm2wgs.transform(x_pred, y_pred)
