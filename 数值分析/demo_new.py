@@ -2,11 +2,11 @@
 """
 +++++++++++++++++++++++++++++++++++
 @ File        : demo_new.py
-@ Time        : 2023/12/07 16:45:47
+@ Time        : 2023/11/19 16:45:47
 @ Author      : Mirrich Wang
 @ Version     : Python 3.8.12 (Conda)
 +++++++++++++++++++++++++++++++++++
-True LLA: (22.13484127150639, 113.5409844704088)
+True Latitude Longitude: (22.13807371546038, 113.5380982705002)
 Using latitude, longitude, altitude to complete task.
 according to the Algorithm principle of WGS84 -> ECEF, implemented using numpy.
 +++++++++++++++++++++++++++++++++++
@@ -24,7 +24,7 @@ plt.figure(figsize=(8, 6))
 ==========="""
 
 # the latitude and longitude of ture position
-true_lla = (22.13484127150639, 113.5409844704088)
+true_lla = (22.13807371546038, 113.5380982705002)
 # WGS84 parameters
 a = 6378137.0  # Ellipsoid major axis
 b = 6356752.314245  # minor semi-axis of ellipsoid
@@ -47,7 +47,7 @@ def lla2xyz(latitude, longitude, altitude):
     Returns:
         np.array: x, y, z
     """
-    # 经纬度的余弦值
+    # cosine of latitude and longitude
     cosLat = np.cos(latitude * np.pi / 180)
     sinLat = np.sin(latitude * np.pi / 180)
     cosLon = np.cos(longitude * np.pi / 180)
@@ -80,7 +80,7 @@ def xyz2lla(X, Y, Z):
     p = np.sqrt(X**2 + Y**2)
     theta = np.arctan2(Z * a, p * b)
 
-    # 计算经纬度及海拔
+    # Calculate latitude, longitude and altitude
     longitude = np.arctan2(Y, X)
     latitude = np.arctan2(Z + eb**2 * b * np.sin(theta) ** 3, p - ea**2 * a * np.cos(theta) ** 3)
     N = a / np.sqrt(1 - ea**2 * np.sin(latitude) ** 2)
@@ -122,7 +122,7 @@ def get_distance(lat1, lon1, lat2, lon2):
 @@@ Data Loading and Preprossing
 =============================="""
 
-data = pd.read_csv("./data/GPSdata1206.csv")  # load csv format file
+data = pd.read_csv("./data/GPSdata.csv")  # load csv format file
 data = data.drop_duplicates()  # drop duplicates
 
 # convert pd.Series to numpy.array
@@ -186,8 +186,8 @@ print("The distance of true position: %fm" % (get_distance(true_lla[0], true_lla
 ================="""
 
 plt.plot(longitude, latitude, "b*", label="data point")
-plt.plot(lon_pred, lat_pred, "r.", label="Solution point")
-plt.plot(true_lla[1], true_lla[0], "y.", label="true point")
+plt.plot(lon_pred, lat_pred, "r.", label="solution point")
+plt.plot(true_lla[1], true_lla[0], "g+", label="true point")
 plt.xlabel("longitude")
 plt.ylabel("latitude")
 plt.title("LLA Visual Figure")

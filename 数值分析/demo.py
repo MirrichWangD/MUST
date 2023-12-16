@@ -2,11 +2,11 @@
 """
 +++++++++++++++++++++++++++++++++++
 @ File        : demo.py
-@ Time        : 2023/11/30 13:32:32
+@ Time        : 2023/11/14 13:32:32
 @ Author      : Mirrich Wang
 @ Version     : Python 3.8.12 (Conda)
 +++++++++++++++++++++++++++++++++++
-True LLA: (22.13484127150639, 113.5409844704088)
+True Latitude Longitude: (22.13807371546038, 113.5380982705002)
 Only use latitude and longitude to complete task.
 WGS84 to ECEF is using pyproj module
 +++++++++++++++++++++++++++++++++++
