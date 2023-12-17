@@ -32,7 +32,7 @@ targets = ['altitude', 'latitude', 'longitude', 'accuracy']
 
 然后调用`readLocation`函数获取定位数据，该方法返回的是一个字典，在我们用的手机设备上这个字典包含了来自两个不同的提供者：network、gps提供的位置信息，在某些设备上可能会有第三个提供者：passive，这里我们需要的是GPS的数据。但是这个字典的具体的结构可能会有所变化，这它取决于设备的硬件和设置，也就是说不是每次调用这个方法都能获得GPS提供的数据。因此我们用了`try-except`语句来捕获异常，当返回的字典不包含GPS数据时进行跳过，直至能够获取GPS数据。根据经验，收集到的数据很多都是重复的，为了收集到一定数量的有效数据，我们设置的收集数据量为1000条。与此同时我们设置了5秒的休眠时间，也就是每隔5秒收集一次数据。数据收集完成后使用`stopLocating`函数停止定位。
 
-```python
+```pythonz
 n = 0
 while n < 1000:
     location = droid.readLocation().result # Getting location data
@@ -247,7 +247,7 @@ accuracy = data["accuracy"].to_numpy()
 
 根据建模，将`accuracy`作为距离$d$使用。随后对经纬度转换成椭球模型的$(x, y, z)$，再进行**Min-Max标准化**，数学公式如下：
 $$
-X'=\frac{X-X_\min}{X_\max-X_\min}
+X'=\frac{X-X_{\min}}{X_{\max}-X_{\min}}
 $$
 其中，$X'$表示标准化后的数据，$X_\max, X_\min$表示原始数据$X$的最大值和最小值。
 
