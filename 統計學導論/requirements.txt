@@ -1,0 +1,14 @@
+imgviz==1.6.1
+matplotlib==3.6.2
+opencv_python==4.1.2.30
+packaging==21.3
+pandas==1.5.1
+Pillow==9.5.0
+protobuf==3.20.3
+PyYAML==6.0
+scipy==1.9.1
+seaborn==0.12.2
+tqdm==4.64.1
+pycocotools==2.0.6
+git+https://github.com/cocodataset/panopticapi.git#egg=panopticapi
+git+https://github.com/facebookresearch/detectron2.git#egg=detectron2

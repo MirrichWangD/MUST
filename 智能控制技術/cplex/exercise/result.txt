@@ -1,0 +1,7 @@
+solution for: docplex_model1
+objective: 76
+status: OPTIMAL_SOLUTION(2)
+x1=1
+x4=2
+x5=2
+x6=1

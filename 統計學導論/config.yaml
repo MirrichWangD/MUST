@@ -1,0 +1,55 @@
+# Global
+lr: 0.0004
+lr_backbone: 0.00001
+batch_size: 1
+weight_decay: 0.0001
+epochs: 300
+lr_drop: 200
+clip_max_norm: 0.1
+
+# Model parameters
+frozen_weights: null
+
+# Backbone
+backbone: resnet50
+dilation: False
+position_embedding: "sine"
+
+# Transformer
+enc_layers: 6
+dec_layers: 6
+dim_feedforward: 2048
+hidden_dim: 256
+dropout: 0.1
+nheads: 8
+num_queries: 100
+pre_norm: False
+
+# Segmentation
+masks: True
+
+# Loss
+## Matcher
+aux_loss: False
+set_cost_class: 1
+set_cost_bbox: 5
+set_cost_giou: 2
+## Loss coefficients
+mask_loss_coef: 1
+dice_loss_coef: 1
+bbox_loss_coef: 5
+giou_loss_coef: 2
+eos_coef: 0.1
+
+# Dataset parameters
+dataset_file: coco_panoptic
+coco_path: F:\DL-Demo\Computer-Vision\Dataset\Detection-Segmentation\COCO
+coco_panoptic_path: F:\DL-Demo\Computer-Vision\Dataset\Detection-Segmentation\COCO
+remove_difficult: null
+
+output_dir: "output"
+device: "cuda"
+seed: 42
+resume: ckpt/detr-panoptic-100.pth
+start_epoch: 0
+num_workers: 2
