@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 """
 +++++++++++++++++++++++++++++++++++
-@ File        : visualize.py
-@ Time        : 2024/4/27 下午7:23
+@ File        : graphical_solution.py
+@ Time        : 2024/04/29 18:14:34
 @ Author      : Mirrich Wang
-@ Version     : Python 3.X.X (Conda)
+@ Version     : Python 3.8.12 (Conda)
 +++++++++++++++++++++++++++++++++++
-
+...
 +++++++++++++++++++++++++++++++++++
 """
+
 
 import numpy as np
 import matplotlib.pyplot as plt
