@@ -28,7 +28,7 @@ wgs2utm = Transformer.from_crs("epsg:4326", "epsg:32649")
 utm2wgs = Transformer.from_crs("epsg:32649", "epsg:4326")
 
 """==============================
-@@@ Data Loading and Preprossing
+@@@ Data Loading and Preprocessing
 =============================="""
 
 data = pd.read_csv("./data/GPSdata1206.csv")
