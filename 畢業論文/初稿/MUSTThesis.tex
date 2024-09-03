@@ -1,0 +1,269 @@
+%This work was supported by the Institute of Systems Engineering, Macau University of Science and Technology.
+%!TEX program 	= xelatex
+\PassOptionsToPackage{quiet}{xeCJK}
+\documentclass{format/MUSTThesisC}
+
+% redeclare 
+\newfontscript{CJK}{hani} 
+% \newfontscript{CJK~Ideographic}{hani} 
+\ExplSyntaxOff  
+\usepackage{xeCJK}
+
+
+
+\usepackage{amsmath,amssymb, amsfonts,amsthm}
+
+
+\renewcommand{\figurename}{{Fig.}}
+\renewcommand{\tablename}{{Table}}
+
+%%%%%%%%%%%%%%%%%%%%%
+%
+% Here one can add any package whenever necessary
+%
+%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usetikzlibrary{arrows.meta,arrows,shapes,automata,backgrounds,petri,patterns,decorations.pathmorphing,positioning,calc,shapes.geometric}%插件
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{algorithmic}
+\usepackage{diagbox}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{tabu}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=blue,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+%\usepackage{xeCJK}
+
+\begin{document}
+
+
+
+
+
+% -------------------------------------------------<< 增加 MUST 校徽水印-----論文終稿使用
+
+\AddToShipoutPicture{\BackgroundPic}
+
+% The watermark line can be commented out when editing. After the thesis is done, one can recover this line such that the watermark is exposed (若水印影响编辑可先注释掉，完成后在加水印).
+
+%% -------------------------------------------------<< 自動生成 MUST 指定格式的扉頁
+\def\Ctitle 		{論文標題}
+\def\Etitle 		{Thesis title}
+\def\Sname 			{王茗琛}
+\def\Sno 			{2230025907}
+\def\Sfaculty 		{創新工程學院}
+\def\Sprogram 		{智能技術碩士}
+\def\Smajor 		{智能技術碩士}
+\def\Ssupervisor	{劉新}
+\def\Sdate			{YYYY/MM/DD}
+
+% 自動生成論文扉頁
+\mustTitle
+
+
+
+%% -------------------------------------------------<< \mustCabstract 生成中文摘要
+\mustCabstract
+{
+	% 引用目錄下的文件內容
+	\input{content/Zh-Abstract}
+}
+{離散事件繫統; 監督控制;故障診斷.}
+
+
+
+% \mustEabstract 生成英文摘要
+\mustEabstract
+{
+	\input{content/En-Abstract}
+}
+{Discrete event system; supervisory control; fault diagnosis.}
+
+
+
+
+
+%% -------------------------------------------------<< 生成目錄
+
+
+
+\mustcontents
+
+
+
+
+
+% List of Figures
+\listfigures
+{
+	\input{content/ListOfFigures}
+}
+{}
+
+%ListOfTables
+\listtables
+{
+	\input{content/ListOfTables}
+}
+{}
+
+
+% List of abbreviations
+
+
+\listsymbols
+{
+	\input{content/ListOfSymbols}
+}
+{}
+
+
+
+
+\listabbreviations
+{
+	\input{content/ListOfAbbreviations}
+}
+{}
+
+
+
+
+
+\pagenumbering{arabic}
+
+
+
+
+
+
+
+
+
+% 調整行間距
+\linespread{1.3}\selectfont
+
+
+
+\chapter{Introduction}
+\input{content/chapter01.tex}
+\chapter{Figures and Tables}
+\input{content/chapter02.tex}
+\chapter{Research Method}
+\input{content/chapter03.tex}
+\chapter{An example}
+\input{content/chapter04.tex}
+\chapter{Conclusions}
+\input{content/chapter05.tex}
+
+
+
+
+%% -------------------------------------------------<< bib 參考文獻 中英文 bib 文件要分別創建
+
+\bibreference
+
+
+%% -------------------------------------------------<< 附錄
+\MUSTappendix{
+	\input{content/appendix.tex}
+}
+
+
+%% -------------------------------------------------<< 致謝
+\MUSTacknowledgement{
+	\input{content/acknowledgement.tex}
+}
+
+
+
+
+
+%% -------------------------------------------------<< 個人簡歷
+% 入學時間
+\def\mustProfilea{
+	2014.09
+}
+
+
+% 起止年月
+\def\mustProfileb{
+	2010.09--2014.06 \\
+	2014.09--2017.06
+}
+
+
+% 就讀學校
+\def\mustProfilec{
+	X~X~X~大學 \\
+	X~X~X~大學
+}
+
+
+% 取得學位名稱
+\def\mustProfiled{
+	X~X~學士學位\\
+	X~X~碩士學位
+}
+
+
+%發表的學術論文、著作（論文/著作名稱、報刊/出版社名稱、發表時間、刊物/出版社級別）
+\def\mustProfilee{
+\smallskip
+	待寫,待補
+}
+
+
+%參加的學術項目(項目名稱、項目時間、立項單位、承擔的工作)
+\def\mustProfilef{
+\smallskip
+	待寫,待補
+}
+
+
+
+% 自動生成個人簡歷
+
+\MUSTProfile
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% The English template was written by Tao Qin on April 3, 2022.
