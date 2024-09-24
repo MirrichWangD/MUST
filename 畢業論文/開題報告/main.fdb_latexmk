@@ -1,12 +1,12 @@
 # Fdb version 4
-["xdvipdfmx"] 1727161769.61846 "main.xdv" "main.pdf" "main" 1727161769.98495 0
-  "main.xdv" 1727161769.54863 156120 8a8a3791dc5f997b17115c6889485b55 "xelatex"
+["xdvipdfmx"] 1727167978.96231 "main.xdv" "main.pdf" "main" 1727167979.35203 0
+  "main.xdv" 1727167978.8928 156128 415b5b8268f6cdb3d9df55e3b75a407c "xelatex"
   (generated)
   "main.pdf"
   (rewritten before read)
-["xelatex"] 1727161768.42719 "/Users/mirrich/Documents/Workspaces/MUST/畢業論文/開題報告/main.tex" "main.xdv" "main" 1727161769.98312 0
+["xelatex"] 1727167977.78006 "/Users/mirrich/Documents/Workspaces/MUST/畢業論文/開題報告/main.tex" "main.xdv" "main" 1727167979.35016 0
   "/System/Library/Fonts/Menlo.ttc" 1725569657 2156036 ec05dfca6821d85440da0899493002c3 ""
-  "/Users/mirrich/Documents/Workspaces/MUST/畢業論文/開題報告/main.tex" 1727161768.19446 18211 0a4b10a0700a1a5eef6099241b87dbc3 ""
+  "/Users/mirrich/Documents/Workspaces/MUST/畢業論文/開題報告/main.tex" 1727167977.68124 18212 001eb4c5152284bc9280138712d68066 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -238,10 +238,10 @@
   "/usr/local/texlive/2024/texmf-var/web2c/xetex/xelatex.fmt" 1718803579 10867847 7605635e12ca51b39e91a62bd48246a1 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
   "MUST.png" 1696462154 75614 5dc00ea064e4c3fc0b73ab7db8b84cd9 ""
-  "main.aux" 1727161769.54741 4296 1d25aba3a5d7abaeebb2dcf526519ac3 "xelatex"
-  "main.out" 1727161769.54834 2157 fdd308facde6a747a6128380d10f2df0 "xelatex"
-  "main.tex" 1727161768.19446 18211 0a4b10a0700a1a5eef6099241b87dbc3 ""
-  "main.toc" 1727161769.54859 1519 9b0ad461af2ad61f73c915d3cfb68e61 "xelatex"
+  "main.aux" 1727167978.89165 4296 1d25aba3a5d7abaeebb2dcf526519ac3 "xelatex"
+  "main.out" 1727167978.89252 2157 fdd308facde6a747a6128380d10f2df0 "xelatex"
+  "main.tex" 1727167977.68124 18212 001eb4c5152284bc9280138712d68066 ""
+  "main.toc" 1727167978.89276 1519 9b0ad461af2ad61f73c915d3cfb68e61 "xelatex"
   "tabu.sty" 1696462154 116392 98cfe11e2c593abcfc7d855738ed65af ""
   (generated)
   "main.aux"
