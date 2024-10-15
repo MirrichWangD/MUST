@@ -1,0 +1,17 @@
+1.Patch n’Pack: NaViT,aVisionTransformer  for any Aspect Ratioand Resolution
+方法：论文介绍了NaViT，一种新型的视觉Transformer，它通过序列打包技术，能够在训练时处理任意分辨率和宽高比的输入图像。NaViT利用了ViT灵活的序列建模能力，通过在单个序列中打包多个不同图像的补丁，从而避免了传统模型在处理不同尺寸图像时需要固定分辨率的不足。
+
+2.MS-Former: Memory-Supported Transformer for  Weakly Supervised Change Detection with  Patch-Level Annotations
+方法：论文提出了一种名为MS-Former的新型框架，用于弱监督变化检测任务，特别是利用补丁级别的注释。该框架由一个双向注意力块和一个针对补丁级别注释的监督方案组成。BAB通过从时间差异特征中捕获与变化和未变化区域相关的上下文信息，并将其存储在记忆库中，以构建信息丰富的原型。
+
+3.Medformer: A Multi-Granularity Patching  Transformer for Medical Time-Series Classification
+方法：论文介绍了Medformer，一种专为医学时间序列分类设计的多粒度贴片变换器。Medformer通过三种新颖的机制来利用医学时间序列的独特特征：交叉通道贴片来利用通道间的相关性，多粒度嵌入来捕获不同尺度的特征，以及两阶段（内部和跨粒度）的多粒度自注意力来学习粒度内部和不同粒度之间的特征和相关性。
+
+4.MEGABYTE:ModelingMillion-byteSequenceswith  MultiscaleTransformers
+方法：论文提出了MEGABYTE，一种多尺度解码器架构，用于端到端不同地处理超过一百万字节的序列。MEGABYTE将序列分割成固定大小的块，并在块内使用局部子模型进行自回归预测，同时使用全局模型处理块之间的关系。这种方法实现了次二次自注意力机制、更大的每块前馈层以及在解码过程中的改进并行性，从而在训练和生成阶段都提供了更好的性能和降低的成本。
+
+5.SPOT: Self-Training with Patch-Order Permutation for  object-Centric Learning with Autoregressive Transformers
+方法：论文介绍了一种名为SPOT的框架，旨在通过自训练和变换器解码器中的序列排列来增强无监督面向对象的学习。SPOT包含两个关键技术：一是利用基于注意力的自训练方法，将解码器生成的优越的基于槽的注意力掩码转移到编码器，以提高对象分割的精度；二是为自回归变换器引入一种创新的补丁顺序排列策略，增强了槽向量在重建过程中的作用。
+
+6.Multi-scale Transformers with Adaptive Pathways for Time Series Forecasting
+方法：论文提出了一个名为Pathformer的多尺度Transformer模型，用于时间序列预测。该模型通过多尺度划分将时间序列分割成不同大小的块，并采用双注意力机制来捕捉全局相关性和局部细节。此外，Pathformer引入了自适应路径，根据输入数据的不同时间动态特性，动态调整多尺度建模过程，从而提高模型的准确性和泛化能力。
