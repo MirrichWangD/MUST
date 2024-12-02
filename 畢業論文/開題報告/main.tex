@@ -195,22 +195,21 @@ The study of offline handwritten signature verification will provide a more comp
 
 Although offline handwritten signature verification will not be affected by factors such as digitizers during data collection, it is not possible to guarantee that the signatures obtained multiple times will be exactly the same when users write their personal signatures on paper. It may also be affected by physical pens, paper thickness, etc. Therefore, the preprocessing process after data collection will affect the system verification effect to a certain extent. A good image preprocessing technique will directly affect the system verification performance.
 
-In the past research on offline handwritten signature verification, scholars have taken traditional machine learning methods based on sample distribution in order to design image features to verify whether the signature is forged or not \cite{1}. However, this method has defects, the verification credibility and accuracy rely heavily on manually designed features, and there are restrictions on the font style of handwritten signatures and other requirements, and the time cost of data preprocessing is very huge. With the development of deep learning and convolutional neural network, in recent years, scholars gradually take the convolutional part of the convolutional neural network to reason about handwritten signatures, and the multi-channel feature map obtained from the reasoning is used as the feature vector of handwritten signature verification. This supervised learning feature extraction method has achieved good results \cite{2}. However, the multi-channel feature maps extracted only by convolutional neural network will cause the process of learning image features to be missing some global features because of the shared parameter convolution kernel operation of the convolutional layer in its model architecture. Based on this, scholars have proposed a Vision Transformer architecture \cite{10} with better performance based on Transformer \cite{9} for image classification tasks. Compared with convolutional neural network, experiments have shown that the attention mechanism inside Transformer has better global feature learning ability, which can accumulate the attention weights in the important parts of the features and pay more attention to the effective features. It is expected to propose an architecture that can make up for the lack of global feature learning ability of convolutional neural networks (CNN), so as to better combine the excellent local feature learning ability of convolutional neural networks.
+In the past research on offline handwritten signature verification, scholars have taken traditional machine learning methods based on sample distribution in order to design image features to verify whether the signature is forged or not \cite{1}. However, this method has defects, the verification credibility and accuracy rely heavily on manually designed features, and there are restrictions on the font style of handwritten signatures and other requirements, and the time cost of data preprocessing is very huge. With the development of deep learning and convolutional neural network (CNN), in recent years, scholars gradually take the convolutional part of the CNN to reason about handwritten signatures, and the multi-channel feature map obtained from the reasoning is used as the feature vector of handwritten signature verification. This supervised learning feature extraction method has achieved good results \cite{2}. However, the multi-channel feature maps extracted only by CNN will cause the process of learning image features to be missing some global features because of the shared parameter convolution kernel operation of the convolutional layer in its model architecture. Based on this, scholars have proposed a Vision Transformer architecture \cite{10} with better performance based on Transformer \cite{9} for image classification tasks. Compared with CNN, experiments have shown that the attention mechanism inside Transformer has better global feature learning ability, which can accumulate the attention weights in the important parts of the features and pay more attention to the effective features. It is expected to propose an architecture that can make up for the lack of global feature learning ability of CNN, so as to better combine the excellent local feature learning ability of CNN.
 
 Offline handwritten signature verification consists of two tasks: Writer-Dependent (WD) and Writer-Independent (WI). the WD task requires Reference and Query to verify the handwritten signature samples to verify whether the signatures are forged or not, and to a certain extent, it depends on the features of the writer's Reference. the WI task requires only the Query to verify the signature samples, and to a certain extent, it relies on the features of the writer's Reference. WI task is to verify whether the signature is forged by Query only, and will not depend on the Reference feature of the writer. In the past, scholars adopted Support Vector Machines as feature classifiers to verify whether a handwritten signature is forged or not based on manually designed features. When the image size is larger, the number of features is more, which leads to the model parameters of the support vector machine are difficult to converge, increasing the overall model architecture training cost. Thus, it is expected to propose a feature classifier that can converge faster and outperform the support vector machine.
 
-
+\newpage
 
 \subsection{Research Objectives}
 
-For the WD and WI tasks, the main objectives of this paper are as follows: 1. to reproduce the OSV (Offline Signature Verification) model; 2. to propose an OSV model architecture that combines the local feature learning capability of convolutional neural networks and the global feature learning capability of Transformer; 3. to propose faster convergence and better results of support vector machines for offline handwritten signature feature classifier
+For the WD and WI tasks, the main objectives of this paper are as follows: 1. to reproduce the OSV (Offline Signature Verification) model; 2. to propose an OSV model architecture that combines the image local feature learning capability of CNN and the global feature learning capability of Transformer images; 3. to propose a faster convergence of the training process and a better result better offline handwritten signature feature classifier.
 
-In the first stage, the existing newer OSV models are reproduced to analyze and summarize the details and features of the OSV model architectures, and to find out the commonalities and shortcomings among them, so as to better find the key points and methods for optimization.
+In the first phase, the existing newer OSV models are reproduced to analyze and summarize the details and features of OSV model architectures, and to find out the commonalities and shortcomings among them, so as to better find out the optimization key points and methods.
 
-In the second stage, a Transformer-based optimization scheme is proposed on the basis of the reproduced model, and comparison experiments are taken to verify that the model performance is better than the previous model performance. During the comparison experiments, the image preprocessing and validation methods are constrained to be consistent, so as to find out the final training and validation scheme suitable for the model architecture.
+In the second phase, on the basis of the reproduced models, an OSV model optimization scheme based on Transformer architecture is proposed. Multi-scale features of CNN are added to the Encoder-Decoder architecture of Transformer, so as to enhance the model to learn image features at each scale. Model training will take place in a comparative experiment to verify the model credibility and quality. During the comparison experiments, the image preprocessing and validation methods are constrained to be consistent so as to find out the final training and validation scheme suitable for the model architecture.
 
-In the third phase, since the convolutional neural network in the image classification task is different from the offline handwritten signature verification task in terms of final output category probability, the support vector machine is used on the proposed model to experiment whether the extracted image features can be used effectively, and then replaced by a feature classifier with better results.
-
+In the third phase, since the CNN in the image classification task is different from the offline handwritten signature verification task in terms of the final output category probability, the previous offline handwritten signature verification algorithms or models adopt the support vector machine approach to identify whether the signature is a forgery or not. Therefore, the proposed model uses support vector machines to experiment whether the extracted image features can be effectively used for identification, and the subsequent will take the category probability output of Global Average Pooling+Fully Connected layer in the image classification task for signature recognition, and carry out comparative experiments to verify whether this approach can better accomplish the offline handwriting signature verification task. Signature Verification Task.
 
 \newpage
 \section{Literature Review}
@@ -238,18 +237,25 @@ To summarize, in this paper, based on the TransOSV [16] architecture, we will ad
 \newpage
 \section{Offline Signature Verification TransFormer}
 
-In this section, the methods used are first summarized and the proposed model structure is described in detail. The specific details of the proposed feature extractor containing encoder, convolution module, and decoder structures are analyzed in depth. This will be followed by the details of the loss function, optimizer, and writer-independent classifier \cite{17} for the model parameter training process. Finally, experiments on whether or not to share the model parameters of the feature extractor, and the types of classifiers will be described to achieve good results for the offline verification task of handwritten signatures.
+In this section, the methods used are first summarized and the proposed model structure is described in detail. The specific details of the proposed feature extractor containing Backbone, Encoder, Convolution Module, and Decoder structures are analyzed in depth. This will be followed by the details of the loss function, optimizer, and writer-independent classifier \cite{17} for the model parameter training process. Finally, experiments on whether or not to share the model parameters of the feature extractor, and the types of classifiers will be described to achieve good results for the offline verification task of handwritten signatures.
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[scale=0.45]{figure/p1.jpg}
+	\includegraphics[scale=0.5]{figure/p1.jpg}
 	\caption{Offline Signature Verification TransFormer (OSVTF)}\label{fig:p1}
 \end{figure}
 
 \subsection{Overview}
 
-The proposed OSVTF is shown in Fig. \ref{fig:p1}. A pair of handwritten signature images Reference and Query of the same size are input. the first passes through the Backbone to extract the multichannel feature map. Then the multi-channel feature maps are passed through a weight-sharing Encoder to learn the image features, and this part of the inference will extract a pair of flat feature tokens $x_r^h,x_q^h$ and a pair of flat feature maps $[x_r^1,\cdots,x_r^N]$. Subsequently the flat feature maps will be reshape to 2D image vectors before inference by convolution module. The output of the convolution module will be divided into two directions: the first direction will pass through the Global Average Pooling layer to get the flat convolutional features $f_r^c,f_q^c$; and the other direction will pair into the Decoder to get the flat attentional decoding features $f_r^h,f_q^h$. The training process will collect the flat feature tokens $x_r^h,x_q^h$ in the inference process, and the training process will collect the flat feature tokens $x_r^h,x_q^h$ in the inference process. $x^h,x_q^h$, flat convolutional features $f_r^c ,f_q^c$ and flat attentional decoding features $f_r^h,f_q^h$ during the inference process will be collected to perform Focal Contrast Loss (FC) loss computation to train the model weights. The Encoder, Decoder and Conv-Module structures are analyzed in depth next.
+The proposed OSVTF is shown in Fig. \ref{fig:p1}. Input a pair of handwritten signature images with the same size Reference and Query, firstly extract the multi-scale feature map through Backbone, and then the multi-scale feature map will be flattened and spliced through the weight-sharing Encoder in order to learn the image features, and this part of the inference will be extracted to obtain a pair of flattened feature tokens $x_r^e, x_q^e$ and a pair of flattened feature maps $[x_r^1, \cdots, x_r^N]$. Subsequently the flat feature maps will be reshape to 2D image vectors before inference by convolution module. The output of the convolution module will be divided into two directions: the first direction will pass through the Global Average Pooling layer to get the flat convolutional features $f_r^c, f_q^c$; and the other direction will pair into the Decoder to get the flat attentional decoding features $f_r^d, f_q^d$. The training process will collect the flat feature tokens $x_r^e,x_q^e$ in the inference process, and the training process will collect the flat feature tokens $x_r^e,x_q^e$ in the inference process. $x_r^e,x_q^e$, flat convolutional features $f_r^c ,f_q^c$ and flat attentional decoding features $f_r^d,f_q^d$ during the inference process will be collected to perform Focal Contrast Loss (FC) loss computation to train the model weights. The Backbone, Encoder, Decoder and Conv-Module structures are analyzed in depth next.
 
+\subsection{Backbone}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[scale=0.5]{figure/p2.jpg}
+	\caption{Backbone structure}\label{fig:p2}
+\end{figure}
 
 \subsection{Encoder}
 
@@ -257,8 +263,8 @@ Encoder is following the model structure of ViT (Vision Transformer) \cite{10} s
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[scale=0.45]{figure/p2.jpg}
-	\caption{Vision Transformer structure}\label{fig:p2}
+	\includegraphics[scale=0.45]{figure/p3.jpg}
+	\caption{Vision Transformer structure}\label{fig:p3}
 \end{figure}
 
 Take Reference ($C\times H\times W$) as an example, where $C,H,W$ denote the number of image channels, height and width.ViT first divides the input image into N patches and flattens it, where patch number is shown in equation (\ref{e1}).
@@ -273,8 +279,8 @@ Where $E(\cdot)$ denotes Embeddings. pos denotes Position Embeddings. each Encod
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[scale=0.45]{figure/p3.jpg}
-	\caption{Multi-Head Attention and Scaled DotProduct Attention}\label{fig:p3}
+	\includegraphics[scale=0.45]{figure/p4.jpg}
+	\caption{Multi-Head Attention and Scaled DotProduct Attention}\label{fig:p4}
 \end{figure}
 
 Each Encoder Layer consists of a Multi-Head Self Attention (MHSA), Feed Forward Network (FFN), and two Residual Accumulation \& Layer Normalization (LN). First of all, before the input Token enters the Encoder, it will go through three Linear layers to map the input vectors to get $Q,K,V$, and input the mapped three vectors into the MHSA for the attention feature computation.The MHSA in the Encoder is the same as that of the MHSA in the Transformer \cite{9}, which is the same as that of the MHSA of the Transformer, which is the same as that of the MHSA of the Transformer \cite{9}, which is the MHSA of the MHSA of the Transformer. Scaled Dot Product Attention, which is calculated as equation (3).
@@ -318,8 +324,8 @@ The output obtained after Conv-Module is propagated in two directions: the first
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[scale=0.45]{figure/p4.jpg}
-	\caption{Decoder and Cross-Attention}\label{fig:p4}
+	\includegraphics[scale=0.45]{figure/p5.jpg}
+	\caption{Decoder and Cross-Attention}\label{fig:p5}
 \end{figure}
 
 The Decoder in OSVTF is different from the Transformer Decoder in that it takes two MHSAs and Cross-attention as shown in Figure 4-(a). Similar to the ViT input stage, before inputting the flattened convolutional features, a pair of learnable parameters with the same number of dimensions as the flattened convolutional features, defined as Class Token, is initialized.Its role is the same as that of the Class Token of the ViT-Encoder, which both define an adjusted weight for it to learn whether an image is a forgery or not in a new dimension, thus enabling the model to learn image features better.
