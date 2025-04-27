@@ -1,6 +1,13 @@
-This research deals with the supervisory control problem of discrete event systems.
+Offline handwritten signature verification is one of the application scenarios of biometric technology, which is widely used in daily life for security authentication, financial transactions and other security fields based on the comparison of the handwritten signature provided by the user with the handwritten signature stored in the database in order to verify the user's identity. In academic research, offline handwritten signature verification is defined as author-independent and author-dependent tasks. The first task is to verify the handwritten signature against the reference signature of the corresponding author. The second task is to use an independent author classifier based on the author-dependent task to determine whether the input signature is forged.
+
+This work is as follows: 1. Propose an end-to-end model structure of OSVTF for multi-scale fusion of features in images, and initially verify the performance of the model structure. 2. Conduct ablation experiments to verify the performance of the model sub-network combination scheme for the multi-scale feature fusion and model optimization part. 3. compare the performance of OSVTF with support vector machine or global average pooling as a classifier for the author-dependent task.
+
+In the experimental part, the OSVTF model has EERs of 4.54\% and 2.13\% for author-independent and author-dependent tasks on the BHSig-B 80/20 dataset, and EERs of 3.90\% and 2.68\% on the BHSig-H 100/60 dataset. In the ablation experiment part, OSVTF had an EER of 4.75\% in the author-independent task on the CEDAR 50/5 dataset. The results confirm that OSVTF with multi-scale fusion features can enhance the sensitive part of feature learning for signature forgery, and some of the optimizations will accelerate the convergence speed of the model training process.
 
 
-Do not say something like ``This paper''.
+% This research deals with the supervisory control problem of discrete event systems.
 
-(Use singular keywords. Keywords are separated by commas or semicolons, and there is often a period at the end.)
+
+% Do not say something like ``This paper''.
+
+% (Use singular keywords. Keywords are separated by commas or semicolons, and there is often a period at the end.)

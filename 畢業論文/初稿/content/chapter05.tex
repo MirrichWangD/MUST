@@ -1,23 +1,31 @@
-結論由研究結果引伸而來，相同的研究結果，不同的研究者可能引伸
-出不同的結果，作者可表達對此結果具有的理論和實際價值的看法, 具體要求如下：
+In this work, a deep learning model architecture for image multi-scale feature fusion based on CNN+Transformer style is proposed for the current stage of deep learning models for offline handwritten signature verification. The model architecture is further improved on the basis of the TransOSV model architecture similar to the twin network style by adding the feature of extracting different scale feature maps from multiple network layers in the CNN on the basis of multiple different feature combination mechanisms adopted, and using the FPN Fusion module of FPN-Style to fuse the multi-scale features. Secondly, the Conv-Module and Part Decoder of the sub-network were optimized to adapt the multi-scale fusion features. In order to accelerate the speed of model inference with the added multiscale fusion features, a downsampling-like adjustment is taken to the Conv-Module, and after reconstructing the feature vectors of the Holistic output into 2D image features, a convolution operation with downsampling is taken in the feature dimensions to optimize the redundancy of the useless features in the image by decreasing the number of channels and the size of the image through this part. In Part Decoder, a mapping operation is added to flatten the image features from the Conv-Module downsampling operation and map them into the higher dimensions with a modified cross-multiple attention computation, thus accelerating the overall inference process in a model architecture with the addition of a feature extraction sub-network.
 
-（1） 包括研究過程中所遇到或引發的種種現象思考、根據研究成果，提
-出解決問題的方向，以及未來值得研究的方向。
+In the experimental phase part, it is total divided into three parts: replication experiments on the WI task, comparison experiments of classifiers on the WD task, and model ablation experiments. On the WI task, the BHSig-B and BHSig-H datasets are taken to train the initially constructed OSVTF with certain epochs. For the BHSig-B dataset, the 50/50 ratio is to evaluate the generalization ability of the model, and the 80/20 ratio is to evaluate the comprehensive learning ability of the model. On the WD task, the focus is on comparing the difference between the GAP classifier and the SVM classifier. In the experimental part of the model, a side-by-side comparison is made for the optimization of multi-scale fusion features, Conv-Module, and part decoder. The experimental results show that the optimization of Conv-Module and part decoder after adopting multi-scale fusion features can make the parameters converge faster during model training.
 
-（2） 結論要根據論文寫出總結性內容，觀點需具體明確，要有自己的創
-見。
-
-（3） 應直接回答研究問題。論據充分，層次清楚，觀點明確，要點分明，
-評論合理可信。提示進一步研究的問題，交待本研究是否具體可行，
-提示亟待改進之處，詳細地交待研究限制。建議應具參考價值。
+In the side-by-side comparison, the performance of OSVTF has outperformed the previous TransOSV model. However, in the model training process, the performance of TransOSV model cannot be perfectly reproduced due to the limitation of the training environment and the lack of model details. Meanwhile, in the offline signature verification task, there is no special preprocessing of the image, the image size is set to be slightly larger than that of ImageNet, and a weakened ResNet-34 is taken on the backbone for training. Therefore, in the next step, we will try to set up more GPUs and set up fixed image sizes and image preprocessing work for different ResNet series models on the backbone, so as to experiment with different specifications of the OSVTF model, which can work in various device environments as much as possible.
 
 
+% 結論由研究結果引伸而來，相同的研究結果，不同的研究者可能引伸
+% 出不同的結果，作者可表達對此結果具有的理論和實際價值的看法, 具體要求如下：
 
-Review the main research purpose or hypothesis, discuss whether the results meet the expectations, and briefly explain the reasons.
+% （1） 包括研究過程中所遇到或引發的種種現象思考、根據研究成果，提
+% 出解決問題的方向，以及未來值得研究的方向。
 
-Summarize the main research results, discuss the consistency or inconsistency with other scholars' conclusions and the reasons.
+% （2） 結論要根據論文寫出總結性內容，觀點需具體明確，要有自己的創
+% 見。
+
+% （3） 應直接回答研究問題。論據充分，層次清楚，觀點明確，要點分明，
+% 評論合理可信。提示進一步研究的問題，交待本研究是否具體可行，
+% 提示亟待改進之處，詳細地交待研究限制。建議應具參考價值。
 
 
-Point out the limitations of the research and the possible impact of the limitations.
 
-Point out the theoretical significance or potential engineering application value of the results.
+% Review the main research purpose or hypothesis, discuss whether the results meet the expectations, and briefly explain the reasons.
+
+% Summarize the main research results, discuss the consistency or inconsistency with other scholars' conclusions and the reasons.
+
+
+% Point out the limitations of the research and the possible impact of the limitations.
+
+% Point out the theoretical significance or potential engineering application value of the results.
+
