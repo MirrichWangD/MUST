@@ -117,9 +117,13 @@
 % 设置页眉
 \pagestyle{fancy}
 % 頁眉左側顯示內容 \Ctitle 論文的題目
-\lhead{\fontsize{10pt}{\baselineskip}\selectfont\Etitle}
+% \lhead{\fontsize{10pt}{\baselineskip}\selectfont\Etitle}
 % 頁眉右側顯示內容
-\rhead{\fontsize{10pt}{\baselineskip}\selectfont\leftmark}
+% \rhead{\fontsize{10pt}{\baselineskip}\selectfont\leftmark}
+% 左侧标题设置（修正对齐）
+\lhead{\parbox[b]{0.6\textwidth}{\raggedright\fontsize{10pt}{\baselineskip}\selectfont\Etitle}}
+% 右侧章节标记（修正对齐）
+\rhead{\parbox[b]{0.3\textwidth}{\raggedleft\fontsize{10pt}{\baselineskip}\selectfont\leftmark}}
 % 定义页码显示形式
 \pagenumbering{Roman}
 % 定义此頁不顯示頁眉，但是頁腳中部顯示頁碼，plain替換為empty，則頁眉頁腳均不顯示

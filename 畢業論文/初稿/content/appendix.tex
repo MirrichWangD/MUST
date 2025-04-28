@@ -1,152 +1,33 @@
+\section*{A.1 Train Hyper-parameters}
 
-主要是冗長結論如定理的證明, 以及實驗中裝置的冗長描述及參數等。
-
-\section*{A.1 An appendix}
-
-
-% \subsection{List of symbol}
-
-%  $G$ \hspace{12.5em} Deterministic finite automaton
-%  $G_{nd}$ \hspace{11.8em} Nondeterministic finite automaton
-%  $\delta$ \hspace{12.6em} Partial state transition function
-%  $x_0$ \hspace{12.4em} Initial state
-%  $X_0$ \hspace{12.3em} Set of initial states
-%  $\Sigma$ \hspace{12.7em} Set of events
-%  $\Sigma^{\ast}$ \hspace{12.3em} Set of sequences
-%  $\Sigma_c$ \hspace{12.3em} Set of controllable events
-%  $\Sigma_{uc}$ \hspace{12em} Set of uncontrollable events
-%  $\Sigma_o$ \hspace{12.3em} Set of observable events
-%  $\Sigma_{uo}$ \hspace{12em} Set of unobservable events
-%  $\Sigma_f$ \hspace{12.3em} Set of fault events
-%  $\emptyset$ \hspace{12.8em}   Empty set
-%  $\varepsilon$  \hspace{12.8em} Empty sequence
-%  $S$ \hspace{12.8em} Supervisor
-%  $AT$ \hspace{12em} Attacked labels
-%  $T_q$ \hspace{12.4em} Quiescent gross decision structure
-%  $\Gamma$ \hspace{12.7em} Set of control actions
-%  $X_S$ \hspace{12.3em} Set of secret states
-
-
-
-% \subsection*{A.2~smithchart mirrored}
-% \begin{figure}[H]
-% 	\centering
-% 	\begin{tikzpicture}[scale=1.2]
-% 	\begin{smithchart}[smithchart mirrored,]
-% 	\addplot coordinates {
-% 		(0.5,0.2) (1,0.8) (2,2)
-% 	};
-% 	\end{smithchart}
-% 	\end{tikzpicture}
-	
-% \end{figure}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-% \subsection*{A.3~plot3D}
-% \begin{figure}[H]
-
-% 	\begin{subfigure}{.49\textwidth}
-% 		\centering
-% 		\begin{tikzpicture}[scale=0.7]
-% 		\begin{axis}[
-% 		xlabel={Temperature [\textcelsius]},
-% 		ylabel={Solubility [g per 100 g water]},
-% 		ymajorgrids=true,
-% 		grid style=dashed,]
-% 		\addplot[color=red]{exp(x)};
-% 		\end{axis}
-% 		\end{tikzpicture}
-% 		\caption{A subfigure}
-% 	\end{subfigure}
-% %-----------------------------------------------------------
-% 	\begin{subfigure}{.49\textwidth}
-% 		\centering
-% 		\begin{tikzpicture}[scale=.7]
-% 			\begin{axis}[
-% 				xlabel={Temperature [\textcelsius]},
-% 				ylabel={Solubility [g per 100 g water]},
-% 				xmin=0, xmax=100,
-% 				ymin=0, ymax=120,
-% 				xtick={0,20,40,60,80,100},
-% 				ytick={0,20,40,60,80,100,120},
-% 				legend pos=north west,
-% 				ymajorgrids=true,
-% 				grid style=dashed,
-% 				]
-% 				\addplot[
-% 				color=blue,
-% 				mark=square,
-% 				]
-% 				coordinates {
-% 					(0,23.1)(10,27.5)(20,32)(30,37.8)(40,44.6)(60,61.8)(80,83.8)(100,114)
-% 				};
-% 				\legend{CuSO$_4\cdot$5H$_2$O}
-% 			\end{axis}
-% 		\end{tikzpicture}
-% 		\caption{A subfigure}
-% 	\end{subfigure}
-% %-----------------------------------------------------------
-% 	\centering
-% 	\begin{subfigure}{.49\textwidth}
-% 		\begin{tikzpicture}[scale=0.7]
-% 			\begin{axis}[
-% 				axis lines = left,
-% 				xlabel = $x$,
-% 				ylabel = {$f(x)$},
-% 				ymajorgrids=true,
-% 				grid style=dashed,]
-% 				]
-% 				%Below the red parabola is defined
-% 				\addplot [
-% 				domain=-10:10, 
-% 				samples=100, 
-% 				color=red,
-% 				]
-% 				{x^2 - 2*x - 1};
-% 				\addlegendentry{$x^2 - 2x - 1$}
-% 				%Here the blue parabloa is defined
-% 				\addplot [
-% 				domain=-10:10, 
-% 				samples=100, 
-% 				color=blue,
-% 				]
-% 				{x^2 + 2*x + 1};
-% 				\addlegendentry{$x^2 + 2x + 1$}
-% 			\end{axis}
-% 		\end{tikzpicture}
-% 		\caption{A subfigure}
-% 	\end{subfigure}
-% \end{figure}
-
-
-
-
-% \subsection*{A.4~plot3D}
-% \begin{figure}[H]
-% 	\centering
-% 	\begin{tikzpicture}[scale=1.2]
-% 	\begin{axis}[
-% 	hide axis,
-% 	xlabel=$x$,ylabel=$y$,
-% 	mesh/interior colormap name=hot,
-% 	colormap/blackwhite,
-% 	]
-% 	\addplot3 [domain=-1.5:1.5,surf]
-% 	{-exp(-x^2-y^2)};
-% 	\end{axis}
-% 	\end{tikzpicture}
-
-% app:plot3D
-% \end{figure}
+\begin{table}[htbp]
+\begin{center}
+\begin{tabu} to 0.4\textwidth{X[3, l]X[3, l]}  
+%0.8\textwidth   为设置表格宽度  
+%X[c]      表示这一列居中，所占比例为1，相当于X[1,c]  
+%X[3,c]   表示这一列居中，所占比例为3，这列的宽度是X[c]列的3倍  
+\toprule
+Symbols & Values\\
+\midrule
+$L$ & 8 \\
+$M$ & 12 \\
+$D$ & 768 \\
+$P$ & 4 \\
+$S$ & 2 \\
+$d_\mathcal{C}$ & 512 \\
+$d_\mathcal{P}$ & 512 \\
+$n$ & 0.3 \\
+$m$ & 0.9 \\
+$\alpha_1$ & 0.6 \\
+$\alpha_2$ & 0.8 \\
+$\overline{K}$ & 10 \\
+$\overline{V}$ & 10 \\
+$\lambda_1$ & 0.5 \\
+$\lambda_2$ & 1.0 \\
+$\lambda_3$ & 0.5 \\
+$\lambda_4$ & 2.0 \\
+$\xi$ & 0.2 \\
+\bottomrule
+\end{tabu}
+\end{center}
+\end{table}

@@ -1,17 +1,37 @@
-$P$ \hspace{6em}   Set of places
-
-$G$ \hspace{6em} Deterministic finite automaton
-
-$G_{nd}$ \hspace{5.2em} Nondeterministic finite automaton
-
-$\delta$ \hspace{6.4em} Partial state transition function
-
-$x_0$ \hspace{5.9em} Initial state
-
-$X_0$ \hspace{5.6em} Set of initial states
-
-$\Sigma$ \hspace{6.1em} Set of events
-
-
-\medskip\medskip
-\noindent\textbf{Remark:} Articles are not needed in a nomenclature. For example, the counterpart of $\Sigma$ reads as ``Set of events'', instead of ``The set of events'', although an article ``a'' or ``the'' is grammatically necessary.
+\begin{tabular}{@{} l @{\hspace{3em}} l @{}}
+    $\mathcal{B}, \mathcal{F}, \mathcal{H}, \mathcal{C}, \mathcal{P}$ & OSVTF sub-module \\
+    $H, W, C$ & Height, width, num of channels \\
+    $\mathbf{I}$ & Input image \\
+    $\mathbf{F}$ & Feature map \\
+    $\boldsymbol{x}$ & Feature vector \\
+    $f$ & Flatten feature vector \\
+    $\tilde{\mathbf{W}}, \tilde{\mathbf{b}}, \tilde{P}, \tilde{S}$ & 2D convolutional kernel weight, bias, padding value, stride \\
+    $\mathbf{z}$ & Conv2D output feature map \\
+    $\hat{\mathbf{z}}$ & Normalized feature map \\
+    $\gamma, \beta$ & Learnable weight and bias of normalization \\
+    $s_i, s_j$ & Up-sample magnification factor \\
+    $N$ & Num of feature length \\
+    $P, S$ & swing window size, step size \\
+    $D$ & Num of feature dimensions \\
+    $f^\mathcal{H}, f^{\mathcal{P}_{cls}}$ & Learnable weight of encoder, cross-attention \\
+    $\overline{\boldsymbol{x}}$ & Intermediate layer feature vector \\
+    $\overline{f}$ & Intermediate layer flatten feature vector \\
+    $\boldsymbol{X}$ & MHSA matrix \\
+    $d_q, d_k$ & Feature dimensions of matrix in MHSA \\
+    $\mathbf{T}, \mathbf{L}$ & Linear weight of MHSA \\
+    $\mathcal{E}$ & Transformer encoder layer output feature vector \\
+    $\mathbf{W}_1, \mathbf{W}_2, \mathbf{b}_1, \mathbf{b_2}$ & Weight and bias of Feed Forward Network \\
+    $\mathcal{G}$ & GeLU function \\
+    $h, w$ & Height, width of feature map in 2D convolution \\
+    $\boldsymbol{\alpha}$ & Weight of cross-attention \\
+    $M$ & Num of head in multi-head attention \\
+    $\mathbf{T}^\mathcal{P}$ & Weight of cross-attention \\
+    $\mathcal{D}$ & distance of a pair feature \\
+    $m, n$ & Boundary value \\
+    $\sigma$ & Sigmoid function \\
+    $\overline{K}, \overline{V}$ & Scaling factors \\
+    $\alpha_1, \alpha_2$ & Margin value of loss function \\
+    $\lambda_1, \lambda_2, \lambda_3, \lambda_4$ & Weight values of focal contrast loss \\
+    $\xi$ & Weight value of sparisity loss \\
+    $\mathcal{L}$ & Loss function \\
+\end{tabular}
