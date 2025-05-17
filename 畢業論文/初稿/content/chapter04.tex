@@ -7,9 +7,9 @@ On the loss function, the partial settings $n=0.3,m=0.9,\alpha_1=0.6,\alpha_2=0.
 
 \section{Metrics}
 
-In terms of evaluation metrics, unlike conventional binary classification tasks, the offline handwritten signature verification task requires special attention to NEGATIVE samples, and therefore standard metrics in biometric and signature verification tasks \cite{7} are used to evaluate the performance of OSVTF, i.e., False Rejection Rate (FRR), False Acceptance Rate (FAR) and Equal Error Rate (EER). In a conventional binary classification task, the concept of confusion matrix \cite{6} is used to count the number of sample labels and predicted labels in the format of Table \ref{tab:cm}.
+In terms of evaluation metrics, unlike conventional binary classification tasks, the offline handwritten signature verification task requires special attention to negative samples, and therefore standard metrics in biometric and signature verification tasks \cite{7} are used to evaluate the performance of OSVTF, i.e., False Rejection Rate (FRR), False Acceptance Rate (FAR) and Equal Error Rate (EER). In a conventional binary classification task, the concept of confusion matrix \cite{6} is used to count the number of sample labels and predicted labels in the format of Table \ref{tab:cm}.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \caption{Confusion Matrix}  
 \begin{center}
 \begin{tabu} to 0.8\textwidth{X[3, c]X[3, c]X[3, c]}  
@@ -46,11 +46,11 @@ The EER is calculated using several thresholds and distances for comparison, if 
 	
 As a result, the experimental phase will be based on the ACC, FRR, FAR and EER to comprehensively assess the model performance.
 
-\newpage
 \section{Dataset}
 
-BHSig-B and BHSig-H. Both datasets are published by Indian Institute of Technology Guwahati (IIT Guwahati) \cite{3} dataset of handwritten signatures in Bengali and Hindi. Where BHSig-B contains Bengali handwritten signatures of 100 writers and BHSig-H contains Hindi handwritten signature images of 160 writers. Each user handwritten signature has signed 24 authentic and 30 forged signatures.
-CEDAR. This dataset is an English handwritten signature dataset developed and published by Center of Excellence for Document Analysis and Recognition \cite{30}. It contains 55 handwritten signatures of writers in English. Each user signed 24 authentic and 24 forged signatures by hand.
+\textbf{BHSig-B and BHSig-H}. Both datasets are published by Indian Institute of Technology Guwahati (IIT Guwahati) \cite{3} dataset of handwritten signatures in Bengali and Hindi. Where BHSig-B contains Bengali handwritten signatures of 100 writers and BHSig-H contains Hindi handwritten signature images of 160 writers. Each user handwritten signature has signed 24 authentic and 30 forged signatures.
+
+\textbf{CEDAR}. This dataset is an English handwritten signature dataset developed and published by Center of Excellence for Document Analysis and Recognition \cite{30}. It contains 55 handwritten signatures of writers in English. Each user signed 24 authentic and 24 forged signatures by hand.
 
 \section{Results Analysis}
 
@@ -58,8 +58,8 @@ CEDAR. This dataset is an English handwritten signature dataset developed and pu
 
 On the WI task, OSVTF takes the Euclidean distance method to calculate the distance between two features to determine whether the signature is forged or not, in order to evaluate whether OSVTF outperforms the past models in possessing offline handwritten signature verification performance. The initial stage is validated on BHSig-B and BHSig-H, which are consistent with the past algorithms, by dividing the 100 writers of BHSig-B into training and testing sets according to the ratios of 50:50 and 80:20 for 100 writers, and dividing the 160 writers of BHSig-H into training and testing sets according to the ratio of 100:60 for 160 writers. The preliminary experimental results obtained are shown in Table \ref{tab:wi}.
 
-\begin{table}[htbp]
-\caption{BHSig-B and BHSig-H dataset WI task performance comparison}  
+\begin{table}[H]
+\caption{BHSig dataset WI task performance comparison}  
 \begin{center}
 \begin{tabu} to 0.8\textwidth{X[3, l]X[2, l]X[2, l]X[2, l]}  
 %0.8\textwidth   为设置表格宽度  
@@ -68,21 +68,17 @@ On the WI task, OSVTF takes the Euclidean distance method to calculate the dista
 \toprule
 Model & FRR & FAR & EER \\
 \midrule
-BHSig-B \\
-\midrule
-50/50 \\
+BHSig-B 50/50\\
 SigNet [30] & 13.89 & 13.89 & 13.89 \\
 CaP \cite{25} & 3.96 & 3.96 & 3.96 \\
 IDN \cite{37}	& 5.24 & 4.12 & - \\
-InceptionSVGNet \cite{27} & \bf{2.22} & \bf{3.88} & - \\
-TransOSV \cite{41} & 9.90 & 9.90 & 9.90 \\
-TransOSV [Ours] & 12.41 & 12.41 & 12.41 \\
+InceptionSVGNet \cite{27} & \textbf{2.22} & \textbf{3.88} & - \\
+TransOSV \cite{41} & 9.90 (12.41) & 9.90 (12.41) & 9.90 (12.41)\\
 OSVTF [Ours] & 10.72 & 10.85 & 10.79 \\
 \midrule
-80/20			
+BHSig-B 80/20 \\
 DeepHsv \cite{21} & 11.92 & 11.92 & 11.92 \\
-TransOSV & \bf{3.56} & \bf{3.56} & \bf{3.56} \\
-TransOSV [Ours] & 5.11 & 5.11 & 5.11 \\
+TransOSV \cite{41} & \textbf{3.56} (5.11) & \textbf{3.56} (5.11) & \textbf{3.56} (5.11) \\
 OSVTF [Ours] & 4.47 & 4.61 & 4.54 \\
 \midrule
 BHSig-H 100/60 \\
@@ -90,8 +86,7 @@ SigNet [30] & 15.36 & 15.36 & 15.36 \\
 IDN \cite{37} & 4.93 & 8.99 & - \\
 CaP \cite{25} & 5.97 & 5.97 & 5.97 \\
 InceptionSVGNet \cite{27} & 3.33 & 6.38 & - \\
-TransOSV \cite{41} & \bf{3.24} & \bf{3.24} & \bf{3.24} \\
-TransOSV [Ours] & 4.86 & 4.86 & 4.86 \\
+TransOSV \cite{41} & \textbf{3.24} (4.86) & \textbf{3.24} (4.86)& \textbf{3.24} (4.86)\\
 OSVTF [Ours] & 3.86 & 3.94 & 3.90 \\
 \bottomrule
 \end{tabu}
@@ -105,8 +100,8 @@ Among them, in the BHSig-B dataset, 10.79\% EER for OSVTF at 50:50 ratio and 12.
 
 On the WD task, in addition to the experiments on the model with the addition of multiscale fusion features, a classifier for the deep learning traditional image classification task (GAP classifier) was added to verify if it is a better fit compared to the SVM's classifier for the model with multiscale fusion features. Therefore, the 80:20 ratio of BHSig-B and BhSig-H were validated and the results are shown in Table \ref{tab:wd}.
 
-\begin{table}[htbp]
-\caption{BHSig-B and BHSig-H dataset WD task performance comparison}  
+\begin{table}[H]
+\caption{BHSig-B dataset WD task performance comparison}  
 \begin{center}
 \begin{tabu} to 0.8\textwidth{X[3, l]X[2, l]X[2, l]X[2, l]}  
 %0.8\textwidth   为设置表格宽度  
@@ -170,7 +165,7 @@ In the Conv-Module and decoder part of this work, the mapping structure of dimen
 	\includegraphics[scale=0.33]{figure/bfmetrics.jpg}
 	\caption{Previous Conv-Module loss and metrics diversification}
 	\label{fig:bfloss}
-  \end{figure}
+\end{figure}
   
 \begin{figure}[H]
 \centering

@@ -18,17 +18,17 @@ Even though CNN's ability to extract image features is outstanding, its core ide
 
 \section{Research Objects}
 
-The Offline Signature Verification TransFormer (OSVTF) architecture proposed in this work, as a whole, is a model designed based on the idea of twin networks, as shown in Fig. \ref{fig:overview}.
+The Offline Signature Verification TransFormer (OSVTF) structure proposed in this work, as a whole, is a model designed based on the idea of siamese networks, as shown in Fig. \ref{fig:overview}.
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[scale=0.46]{figure/overview.jpg}
+        \includegraphics[scale=0.5]{figure/overview.png}
     \end{center}
-    \caption{OSVTF Structure}
+    \caption{OSVTF overview}
     \label{fig:overview}
 \end{figure}
 
-The core idea of the twin network is two sub-networks with shared weights that accept two inputs and output two feature vectors, and subsequently calculate the similarity using a distance function \cite{10}. In the WI and WD tasks of offline handwritten signature verification, a pair of images of the inputreference and query signatures are input, so the overall architecture is referred to TransOSV \cite{41}, based on which the backbone and FPN Fusion modules are added, and the Encoder, Conv-Module, and Decoder sections are subjected to a The Encoder, Conv-Module and Decoder parts are optimized and adjusted in a series of ways, which are more conducive to the change and learning of the features of each part, and the experimental part is needed to confirm that these modules can improve the model's ability of judging forged signatures and generalization ability in different scenarios.
+The core idea of the siamese network is two sub-networks with shared weights that accept two inputs and output two feature vectors, and subsequently calculate the similarity using a distance function \cite{10}. In the WI and WD tasks of offline handwritten signature verification, a pair of images of the inputreference and query signatures are input, so the overall architecture is referred to TransOSV \cite{41}, based on which the backbone and FPN Fusion modules are added, and the Encoder, Conv-Module, and Decoder sections are subjected to a The Encoder, Conv-Module and Decoder parts are optimized and adjusted in a series of ways, which are more conducive to the change and learning of the features of each part, and the experimental part is needed to confirm that these modules can improve the model's ability of judging forged signatures and generalization ability in different scenarios.
 
 In the overall research plan and experiments, the two general directions of WI and WD are still adopted to evaluate the performance and quality of the model as a whole, based on which the multi-channel feature maps of CNN and the attention mechanism of Transformer will be visualized, and we need to pay attention to whether these modules are able to better grasp some of the important feature information of the image in the image feature learning. In addition, there are many ways of fusion of multi-scale features, such as Mask R-CNN \cite{13} takes the feature pyramid network style (FPN-Style) \cite{23}, this kind of fusion includes, but is not limited to, mean accumulation, direct summation, and splicing, so the follow-up will be to train the model of these fusion methods with the control variables in order to get the best performance of fusion of multi-scale feature maps way. In addition, the previous twin network approach is to calculate the similarity based on the distance function in order to complete the related tasks, whether this approach can still be effective after the addition of multi-scale fusion features requires some verification, this work will refer to the traditional image classification task of the CNN processing classification approach, the addition of a global average pooling layer as a classifier to classify the features label prediction, in order to determine whether it would be outperform the previous distance similarity judgment.
 

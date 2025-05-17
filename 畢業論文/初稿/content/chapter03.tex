@@ -1,27 +1,38 @@
 \section{Overview}
-In this work, we will define the label categories forged as 1 $(y=1)$ and genuine as 0 $(y=0)$ for handwritten signatures, and the input reference signature image is defined as $R \in \mathbb{R}^{H\times W\times 1}$ and the query signature image is defined as $Q \in \mathbb{R}^{H\times W\times 1}$.
+
+In this work, It will define the label categories forged as 1 $(y=1)$ and genuine as 0 $(y=0)$ for handwritten signatures, and the input reference signature image is defined as $R \in \mathbb{R}^{H\times W\times 1}$ and the query signature image is defined as $Q \in \mathbb{R}^{H\times W\times 1}$. The architecture of the proposed Offline Signature Verification TransFormer (OSVTF) model for multi-scale feature fusion is shown in Fig. \ref{fig:osvtf}, which consists of five parts, namely, Backbone ($\mathcal{B}$), FPN Fusion ($\mathcal{F}$), Holistic Encoder ($\mathcal{H}$), and Conv-Module ($\mathcal{C}$), Contrast based Part Decoder ($\mathcal{P}$) five parts.
 
 \begin{figure}[htbp]
   \begin{center}
-      \includegraphics[scale=0.46]{figure/osvtf.jpg}
+      \includegraphics[scale=0.46]{figure/osvtf.png}
   \end{center}
-  \caption{OSVTF structure Detail}
+  \caption{OSVTF structure}
   \label{fig:osvtf}
 \end{figure}
 
-The architecture of the proposed Offline Signature Verification TransFormer (OSVTF) model for multi-scale feature fusion is shown in Fig. \ref{fig:osvtf}, which consists of five parts, namely, Backbone ($\mathcal{B}$), FPN Fusion ($\mathcal{F}$), Holistic Encoder ($\mathcal{H}$), and Conv-Module ($\mathcal{C}$), Contrast based Part Decoder ($\mathcal{P}$) five parts. In the model we will input a pair of signature image samples $\mathbf{I}_r$ and $\mathbf{I}_q$, the initial input image goes through Backbone with shared weights (ResNet-50 \cite{14} is used as an example in Fig. \ref{fig:osvtf}) to get the multi-scale feature map set $\mathcal{B}(\mathbf{I}_r),\mathcal{B}(\mathbf{I}_q)$, and then the different scale feature maps are fused through FPN Fusion module, and the output of multi-scale fusion feature maps $\mathbf{F}_r^\mathcal{F},\mathbf{F}_q^\mathcal{F}$. Then it enters the Holistic Encoder with shared weights to get the holistic flat features $f_r^\mathcal{H},f_q^\mathcal{H}$ and patch embeddings $\boldsymbol{x}_r^\mathcal{H}=[x_r^{\mathcal{H}_1 }, \cdots, x_r^{\mathcal{H}_N} ]$ and $\boldsymbol{x}_q^\mathcal{H} = [ x_q^{\mathcal{H}_1}, \cdots, x_q^{\mathcal{H}_N} ]$. To further integrate the feature maps, the above patch embeddings are reshaped to a 2D shape, and its outputs $\mathbf{F}_r^\mathcal{C}, \mathbf{F}_q^\mathcal{C}$ are obtained after the Convolutional Module (Conv-Module) with shared weights, and they will go directly to the Contrast based Part Decoder to obtain the cross-attention contrast part flat features $f_r^\mathcal{P},f_q^\mathcal{P}$. In the final prediction stage, Global Average Pooling (GAP) operation is performed on $\mathbf{F}_r^\mathcal{F},\mathbf{F}_q^\mathcal{F}$ and $\mathbf{F}_r^\mathcal{C},\mathbf{F}_q^\mathcal{C}$ to obtain the multiscale fusion flat features $f_r^\mathcal{F},f_q^\mathcal{F}$ and convolution flat features $f_r^\mathcal{C},f_q^\mathcal{C}$. The total feature vector $f_r=[f_r^\mathcal{F},f_r^\mathcal{H},f_r^\mathcal{C},f_r^\mathcal{P} ]$ and $f_q=[f_q^\mathcal{F},f_q^\mathcal{H},f_q^\mathcal{C},f_q^\mathcal{P} ]$ of the OSVTF are obtained by splicing all the flat features, and the judgment of whether $\mathbf{I}_q$ is forged or not will be made based on $f_r$ and $f_q$. Next, Backbone, FPN Fusion, Holistic Encoder, Conv-Module and Contrast based Part Decoder structures will be analyzed in depth.
+In the model, it will input a pair of signature image samples $\mathbf{I}_r$ and $\mathbf{I}_q$, the initial input image goes through Backbone with shared weights (ResNet-50 \cite{14} is used as an example in Fig. \ref{fig:osvtf}) to get the multi-scale feature map set $\mathcal{B}(\mathbf{I}_r),\mathcal{B}(\mathbf{I}_q)$, and then the different scale feature maps are fused through FPN Fusion module, and the output of multi-scale fusion feature maps $\mathbf{F}_r^\mathcal{F},\mathbf{F}_q^\mathcal{F}$. Then it enters the Holistic Encoder with shared weights to get the holistic flat features $f_r^\mathcal{H},f_q^\mathcal{H}$ and patch embeddings $\boldsymbol{x}_r^\mathcal{H}=[x_r^{\mathcal{H}_1 }, \cdots, x_r^{\mathcal{H}_N} ]$ and $\boldsymbol{x}_q^\mathcal{H} = [ x_q^{\mathcal{H}_1}, \cdots, x_q^{\mathcal{H}_N} ]$. To further integrate the feature maps, the above patch embeddings are reshaped to a 2D shape, and its outputs $\mathbf{F}_r^\mathcal{C}, \mathbf{F}_q^\mathcal{C}$ are obtained after the Convolutional Module (Conv-Module) with shared weights, and they will go directly to the Contrast based Part Decoder to obtain the cross-attention contrast part flat features $f_r^\mathcal{P},f_q^\mathcal{P}$. In the final prediction stage, Global Average Pooling (GAP) operation is performed on $\mathbf{F}_r^\mathcal{F},\mathbf{F}_q^\mathcal{F}$ and $\mathbf{F}_r^\mathcal{C},\mathbf{F}_q^\mathcal{C}$ to obtain the multiscale fusion flat features $f_r^\mathcal{F},f_q^\mathcal{F}$ and convolution flat features $f_r^\mathcal{C},f_q^\mathcal{C}$. The total feature vector $f_r=[f_r^\mathcal{F},f_r^\mathcal{H},f_r^\mathcal{C},f_r^\mathcal{P} ]$ and $f_q=[f_q^\mathcal{F},f_q^\mathcal{H},f_q^\mathcal{C},f_q^\mathcal{P} ]$ of the OSVTF are obtained by splicing all the flat features, and the judgment of whether $\mathbf{I}_q$ is forged or not will be made based on $f_r$ and $f_q$. Next, Backbone, FPN Fusion, Holistic Encoder, Conv-Module and Contrast based Part Decoder structures will be analyzed in depth.
 
 \section{Backbone}
 
+In the Backbone section an structure of CNN will be adopted that discards Average Global Pooling and Fully Connected Layers in the output section.Most of the CNN architecture consists of a convolutional layer in the input section and four defined convolutional layers, as shown in Fig. \ref{fig:backbone} for example in ResNet-50 \cite{14}, where each layer consists of a number of bottleneck blocks. 
+
 \begin{figure}[htbp]
   \begin{center}
-      \includegraphics[scale=0.45]{figure/backbone.jpg}
+      \includegraphics[scale=0.45]{figure/backbone.png}
   \end{center}
   \caption{Backbone structure}
   \label{fig:backbone}
 \end{figure}
 
-In the Backbone section an architecture of CNN will be adopted that discards Average Global Pooling and Fully Connected Layers in the output section.Most of the CNN architecture consists of a convolutional layer in the input section and four defined convolutional layers, as shown in Fig. \ref{fig:backbone} for example in ResNet-50 \cite{14}, where each layer consists of a number of bottleneck blocks. A single bottleneck block consists of two convolutional 2D layers with convolutional kernels of ($1\times 1 \to 3\times 3 \to 1\times 1$), and this arrangement mainly has the following purposes: 1. Reduce the feature dimensions to achieve the purpose of improving the computational efficiency; 2. The intermediate $3\times 3$ convolution extracts the local spatial features such as strokes, edges, etc., in the lower dimensional space has the ability to maintain the sensory field while reducing the redundancy, and this reduces the number of channels before expanding to the input, and then the number of channels is expanded to the input, and the number of channels is reduced. This first reduces the number of expression channels and then expands to the input expression channels to find better feature learning parameters in the bottomleneck, which has a better feature abstraction and expression ability; 3. In the actual operation, it can be paired with the identity skip connection to quickly propagate the gradient to avoid gradient disappearance, and at the same time, such a design makes the number of intermediate parameters and the burden of computation greatly reduced, and it can stack more layers. At the same time, this design can greatly reduce the number of intermediate parameters and computational burden, and can stack more layers, such as ResNet-101, to promote the training of deeper networks; 4. This modular design has the advantage of easy fine-tuning of the convolutional parameters, and the number of intermediate channels can be adjusted according to the environment, so as to control the balance of performance and efficiency. In addition, ResNet series network introduces residual connection, which solves the problem of missing features after deep convolutional operation of the image. Residual connection is introduced in each bottomleneck block, which accumulates the feature map of the input part with the output of the bottomleneck, which can reduce the problem of feature loss after a certain number of convolutional layer operations to a certain extent.
+A single bottleneck block consists of two convolutional 2D layers with convolutional kernels of ($1\times 1 \to 3\times 3 \to 1\times 1$), and this arrangement mainly has the following purposes: 
+
+1. Reduce the feature dimensions to achieve the purpose of improving the computational efficiency; 
+
+2. The intermediate $3\times 3$ convolution extracts the local spatial features such as strokes, edges, etc., in the lower dimensional space has the ability to maintain the sensory field while reducing the redundancy, and this reduces the number of channels before expanding to the input, and then the number of channels is expanded to the input, and the number of channels is reduced. This first reduces the number of expression channels and then expands to the input expression channels to find better feature learning parameters in the bottomleneck, which has a better feature abstraction and expression ability; 
+
+3. In the actual operation, it can be paired with the identity skip connection to quickly propagate the gradient to avoid gradient disappearance, and at the same time, such a design makes the number of intermediate parameters and the burden of computation greatly reduced, and it can stack more layers. At the same time, this design can greatly reduce the number of intermediate parameters and computational burden, and can stack more layers, such as ResNet-101, to promote the training of deeper networks; 
+
+4. This modular design has the advantage of easy fine-tuning of the convolutional parameters, and the number of intermediate channels can be adjusted according to the environment, so as to control the balance of performance and efficiency. In addition, ResNet series network introduces residual connection, which solves the problem of missing features after deep convolutional operation of the image. Residual connection is introduced in each bottomleneck block, which accumulates the feature map of the input part with the output of the bottomleneck, which can reduce the problem of feature loss after a certain number of convolutional layer operations to a certain extent.
 
 Assume that the input feature map $ \mathbf{I} \in \mathbb{ R }^{ H\times W\times C } $ of the convolutional layer, the output feature map $\boldsymbol{z} \in \mathbb{ R }^{ H'\times W'\times C' }$, the convolutional kernel size of the convolutional 2D layer $K\times K$ (the convolutional kernel weight $ \tilde{\mathbf{W}} \in \mathbb{ R }^{ K\times K\times C\times C' } $, the padding $\tilde{P}$, the step size $\tilde{S}$, and the bias term $\tilde{b}$. For the $c'$-th output channel of the feature map, the pixel point with spatial location $(i,j)$ is calculated as eq. \ref{eq1}.
 
@@ -34,7 +45,7 @@ In addition, in each bottleneck block, except for the last $1\times 1$ convoluti
 
 \begin{equation}
 \label{eq2}
-  \hat{\boldsymbol{z}}(i, j, c') = \max \left( 0, \gamma_c \frac{\boldsymbol{z}(c', i, j) - \mu'_c}{\sqrt{\sigma^2_{c'}+\epsilon}}+\beta_{c'} \right)
+  \hat{\boldsymbol{z}}(i, j, c') = \max \left( 0, \gamma \frac{\boldsymbol{z}(i, j, c') - \mu}{\sqrt{\sigma^2+\epsilon}}+\beta \right)
 \end{equation}
 
 Where $\mu,\sigma^2$ are the mean and variance of the feature statistics of the $c'$ channel plane in the batch multi-channel feature maps output from the convolutional 2D layer, and $\gamma, \beta$ are the learnable scaling and translation parameters. This shows that the idea of the BN operation is to normalize a certain batch of data, which has the effect of improving the convergence speed when training the model parameters. In each bottomleneck block operation, a cumulative residual operation is performed on the feature maps after three convolutional 2D operations, i.e., the feature maps input to the bottomleneck block are added to the feature maps output from the three convolutional 2D operations, which are then passed to the next bottomleneck block. At the same time, each layer of the backbone operation will be followed by a downsampling operation as a way to reduce the redundant features on the multi-channel feature map, which will be taken as Max Pooling 2D in order to equate the downsampling operation \cite{14}. The above residual linking approach can ensure that the feature map retains certain original image features after the convolution operation, so the ResNet family of networks is most suitable as the backbone of the depth model to extract the image multi-channel feature map.
@@ -54,7 +65,7 @@ In order to be able to effectively utilize the multi-scale feature maps extracte
 
 \begin{figure}[htbp]
   \begin{center}
-      \includegraphics[scale=0.45]{figure/fpn.jpg}
+      \includegraphics[scale=0.45]{figure/fpn.png}
   \end{center}
   \caption{FPN Fusion module structure}
   \label{fig:fpn}
@@ -76,7 +87,7 @@ where $\delta_i=\frac{i'}{s_i} - \lfloor \frac{i'}{s_i} \rfloor, \delta_j = \fra
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[scale=0.8]{figure/bilinear.png}
+  \includegraphics[scale=0.9]{figure/bilinear.png}
   \caption{Bilinear interpolation example}
   \label{fig:bilinear}
 \end{figure}
@@ -89,29 +100,30 @@ After fusing the multi-scale feature map, it will finally go through a convoluti
 
 \section{Holistic Encoder}
 
-\begin{figure}[H]
-  \begin{center}
-      \includegraphics[scale=0.6]{figure/encoder.jpg}
-  \end{center}
-  \caption{Holistic Encoder structure}
-  \label{fig:encoder}
-\end{figure}
-
-The Holistic Encoder is designed with reference to Vision Transformer (ViT) \cite{4} The architecture is shown in Fig. \ref{fig:encoder}. swing embeddings \cite{24} are adopted in the input stage instead of the previous chunking operation, where chunking and mapping are performed on the input multiscale fusion feature maps according to the set window size $P\times P$ and step size S , the patch embeddings are obtained and then flattened to be used as feature vectors $[\overline{x}^{\mathcal{H}_1},\overline{x}^{\mathcal{H}_2},\cdots ,\overline{x}^{\mathcal{H}_N}] \in \mathbb{R}^{N\times D}$, where D denotes the number of mapped feature dimensions, and the vector length, $N$, is computed as eq. \ref{eq5}.
-
+The Holistic Encoder is designed with reference to Vision Transformer (ViT) \cite{4}. In the input part, swing embeddings \cite{24} are adopted in the input stage instead of the previous chunking operation, where chunking and mapping are performed on the input multiscale fusion feature maps according to the set window size $P\times P$ and step size S , the patch embeddings are obtained and then flattened to be used as feature vectors $[\overline{x}^{\mathcal{H}_1},\overline{x}^{\mathcal{H}_2},\cdots ,\overline{x}^{\mathcal{H}_N}] \in \mathbb{R}^{N\times D}$, where D denotes the number of mapped feature dimensions, and the vector length, $N$, is computed as eq. \ref{eq5}.
 
 \begin{equation}
 \label{eq5}
   N=\lfloor \frac{H/4-P+S}{S}\rfloor \times \lfloor \frac{W/4-P+S}{S}\rfloor
 \end{equation}
 
-Splicing a learnable weight $\overline{f}^{\mathcal{H}}\in \mathbb{R}^D$ defined as a class token in swing embeddings, i.e., the feature vector of the input Transformer Encoder Layer is $\overline{\boldsymbol{x}}^\mathcal{H}=[\overline{f}^\mathcal{H},\overline{x}^{\mathcal{H}_1},\overline{x}^{\mathcal{H}_2},\cdots ,\overline{x}^{\mathcal{H}_N} ] \in \mathbb{R}^{(N+1)\times D}$. Due to the flattening operation performed on the feature map, positional embeddings \cite{36} need to be accumulated on the feature vectors as a way to make the feature vectors contain information about their positions on the multiscale fused feature map.
+The Holistic Encoder structure is shown in Fig. \ref{fig:encoder}. 
+
+\begin{figure}[H]
+  \begin{center}
+      \includegraphics[scale=0.55]{figure/encoder.png}
+  \end{center}
+  \caption{Holistic Encoder structure}
+  \label{fig:encoder}
+\end{figure}
+
+Splicing a learnable weight $\overline{f}^{\mathcal{H}_{cls}}\in \mathbb{R}^D$ defined as a class token in swing embeddings, i.e., the feature vector of the input Transformer Encoder Layer is $\overline{\boldsymbol{x}}^\mathcal{H}=[\overline{f}^{\mathcal{H}_{cls}},\overline{x}^{\mathcal{H}_1},\overline{x}^{\mathcal{H}_2},\cdots ,\overline{x}^{\mathcal{H}_N} ] \in \mathbb{R}^{(N+1)\times D}$. Due to the flattening operation performed on the feature map, positional embeddings \cite{36} need to be accumulated on the feature vectors as a way to make the feature vectors contain information about their positions on the multiscale fused feature map.
 
 After swing embeddings, the feature vector $\overline{\boldsymbol{x}}^\mathcal{H}$ enters the Transformer Encoder Layer for attention feature computation. Where Transformer Encoder Layer is formed by $L$ stacks as shown in Fig. \ref{fig:mhsa}.
 
 \begin{figure}[H]
   \begin{center}
-      \includegraphics[scale=0.55]{figure/mhsa.jpg}
+      \includegraphics[scale=0.5]{figure/mhsa.png}
   \end{center}
   \caption{Transformer Encoder Layer structure}
   \label{fig:mhsa}
@@ -186,7 +198,7 @@ Conv2D + ReLU & $3\times 3$ & $h\times w\times d_\mathcal{C}$ \\
 Max Pooling 2D & $2\times 2$ & $\frac{h}{2}\times \frac{w}{2}\times d_\mathcal{C}$ \\ 
 Conv2D + ReLU & $3\times 3$ & $\frac{h}{2}\times \frac{w}{2}\times \frac{d_\mathcal{C}}{2}$ \\ 
 Conv2D + ReLU & $3\times 3$ & $\frac{h}{2}\times \frac{w}{2}\times \frac{d_\mathcal{C}}{2}$ \\ 
-Conv2D + ReLU & $3\times 3$ & $\frac{h}{4}\times \frac{w}{4}\times \frac{d_\mathcal{C}}{2}$ \\ 
+Max Pooling 2D & $2\times 2$ & $\frac{h}{4}\times \frac{w}{4}\times \frac{d_\mathcal{C}}{2}$ \\ 
 \bottomrule
 \end{tabu}
 \end{center}
@@ -201,7 +213,7 @@ In the model training process, the output $\mathbf{F}^\mathcal{C} = \mathcal{C}(
 
 \begin{figure}[H]
   \centering
-      \includegraphics[scale=0.45]{figure/decoder.jpg}
+      \includegraphics[scale=0.45]{figure/decoder.png}
   \caption{Contrast based Part Decoder structure}
   \label{fig:decoder}
 \end{figure}

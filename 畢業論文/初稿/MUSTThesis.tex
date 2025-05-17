@@ -65,7 +65,7 @@
 \def\Sprogram 		{智能技術碩士}
 \def\Smajor 		{智能技術}
 \def\Ssupervisor	{劉新}
-\def\Sdate			{2025/04/29}
+\def\Sdate			{2025/05/16}
 
 % 自動生成論文扉頁
 \mustTitle
@@ -104,18 +104,28 @@
 
 
 % List of Figures
-\listfigures
-{
-	\input{content/ListOfFigures}
-}
-{}
+% \listfigures
+% {
+% 	\input{content/ListOfFigures}
+% }
+% {}
 
 %ListOfTables
-\listtables
-{
-	\input{content/ListOfTables}
-}
-{}
+% \listtables
+% {
+% 	\input{content/ListOfTables}
+% }
+% {}
+
+% 添加图表目录，并将其加入主目录
+\renewcommand{\listfigurename}{List of Figures}
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures} % 手动添加到主目录
+
+% 添加表格目录，并将其加入主目录
+\renewcommand{\listtablename}{List of Tables}
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables} % 手动添加到主目录
 
 
 % List of abbreviations

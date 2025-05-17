@@ -1,37 +1,64 @@
 \begin{tabular}{@{} l @{\hspace{3em}} l @{}}
-    $\mathcal{B}, \mathcal{F}, \mathcal{H}, \mathcal{C}, \mathcal{P}$ & OSVTF sub-module \\
-    $H, W, C$ & Height, width, num of channels \\
+    $\mathcal{B}$ & Backbone \\
+    $\mathcal{F}$ & FPN Fusion \\
+    $\mathcal{H}$ & Holistic Encoder \\
+    $\mathcal{C}$ & Conv-Module \\
+    $\mathcal{P}$ & Contrast based Part Decoder \\
+    $H$ & Image Height \\
+    $W$ & Image width \\
+    $C$ & Num of image channel \\
     $\mathbf{I}$ & Input image \\
     $\mathbf{F}$ & Feature map \\
     $\boldsymbol{x}$ & Feature vector \\
     $f$ & Flatten feature vector \\
-    $\tilde{\mathbf{W}}, \tilde{\mathbf{b}}, \tilde{P}, \tilde{S}$ & 2D convolutional kernel weight, bias, padding value, stride \\
+    $\tilde{\mathbf{W}}$ & 2D convolutional kernel weight \\
+    $\tilde{\mathbf{b}}$ & 2D convolutional kernel bias \\
+    $\tilde{\mathbf{P}}$ & 2D convolutional padding value \\
+    $\tilde{\mathbf{S}}$ & 2D convolutional stride \\
     $\mathbf{z}$ & Conv2D output feature map \\
     $\hat{\mathbf{z}}$ & Normalized feature map \\
-    $\gamma, \beta$ & Learnable weight and bias of normalization \\
-    $s_i, s_j$ & Up-sample magnification factor \\
+    $\gamma$ & Learnable bias of normalization \\
+    $\beta$ & Learnable weight of normalization \\
+    $s_i$ & Upsampling horizontal axis magnification factor \\
+    $s_i$ & Upsampling ordinate magnification factor \\
     $N$ & Num of feature length \\
-    $P, S$ & swing window size, step size \\
+    $P$ & swing window size \\
+    $S$ & swing window step size \\
     $D$ & Num of feature dimensions \\
-    $f^\mathcal{H}, f^{\mathcal{P}_{cls}}$ & Learnable weight of encoder, cross-attention \\
+    $f^{\mathcal{H}_{cls}}$ & Learnable weight of Holistic Encoder \\
+    $f^{\mathcal{P}_{cls}}$ & Learnable weight of Contrast based Part Decoder \\
     $\overline{\boldsymbol{x}}$ & Intermediate layer feature vector \\
     $\overline{f}$ & Intermediate layer flatten feature vector \\
-    $\boldsymbol{X}$ & MHSA matrix \\
-    $d_q, d_k$ & Feature dimensions of matrix in MHSA \\
-    $\mathbf{T}, \mathbf{L}$ & Linear weight of MHSA \\
+    $\boldsymbol{X}$ & MHSA query/key/value matrix \\
+    $d_q$ & Feature dimensions of query matrix in MHSA \\
+    $d_k$ & Feature dimensions of key, value matrix in MHSA \\
+    $\mathbf{T}$ & Input projection linear weight of MHSA \\
+    $\mathbf{L}$ & Output projection linear weight of MHSA \\
     $\mathcal{E}$ & Transformer encoder layer output feature vector \\
-    $\mathbf{W}_1, \mathbf{W}_2, \mathbf{b}_1, \mathbf{b_2}$ & Weight and bias of Feed Forward Network \\
+    $\mathbf{W}_1$ & First linear weight of Feed Forward Network \\
+\end{tabular}
+
+\begin{tabular}{@{} l @{\hspace{3em}} l @{}}
+    $\mathbf{b}_1$ & First linear bias of Feed Forward Network \\
+    $\mathbf{W}_2$ & Second linear weight  of Feed Forward Network \\
+    $\mathbf{b}_2$ & Second linear bias of Feed Forward Network \\
     $\mathcal{G}$ & GeLU function \\
-    $h, w$ & Height, width of feature map in 2D convolution \\
-    $\boldsymbol{\alpha}$ & Weight of cross-attention \\
+    $h$ & Height of feature map in 2D convolution \\
+    $w$ & Width of feature map in 2D convolution \\
     $M$ & Num of head in multi-head attention \\
     $\mathbf{T}^\mathcal{P}$ & Weight of cross-attention \\
     $\mathcal{D}$ & distance of a pair feature \\
-    $m, n$ & Boundary value \\
+    $m$ & Forged sample loss boundary value \\
+    $n$ & Genuine sample loss boundary value \\
     $\sigma$ & Sigmoid function \\
-    $\overline{K}, \overline{V}$ & Scaling factors \\
-    $\alpha_1, \alpha_2$ & Margin value of loss function \\
-    $\lambda_1, \lambda_2, \lambda_3, \lambda_4$ & Weight values of focal contrast loss \\
+    $\overline{K}$ & Genuine sample loss scaling factors \\
+    $\overline{V}$ & Forged sample loss scaling factors \\
+    $\alpha_1$ & Genuine sample margin value of loss function \\
+    $\alpha_2$ & Forged sample margin value of loss function \\
+    $\lambda_1$ & Weight values of multi-scale feature loss \\
+    $\lambda_2$ & Weight values of encoder feature loss \\
+    $\lambda_3$ & Weight values of convolutional module feature loss \\
+    $\lambda_4$ & Weight values of decoder feature loss \\
     $\xi$ & Weight value of sparisity loss \\
     $\mathcal{L}$ & Loss function \\
 \end{tabular}
