@@ -180,30 +180,15 @@ Where $\mathbf{W}_1\in \mathbb{R}^{D\times d_{ff}}, b_1\in \mathbb{R}^{d_{ff}}$ 
 
 \section{Conv-Module}
 
-The image features are subjected to feature learning by Holistic Encoder capturing the relative position information of the elements in the sequence, but it has the limitation of learning absolute position information. The signature verification task needs to be accurate to the stroke position information (e.g., stroke order, local structural differences), so after this in order to enhance some small portion of the image features, the output $\boldsymbol{x}^\mathcal{H}$ of the patch token of the Holistic Encoder is rearranged, and the flattened token is reconverted into a 2D shape $\mathbf{F}^\mathcal{H} \in \mathbb{R}^{h\times w\times D}$ to perform a convolution operation, where $h = \lfloor \frac{H/4-P+S}{S}\rfloor,w = \lfloor \frac{W/4-P+S}{S}\rfloor $. This module introduces the convolution operation to reprocess the patch features output from the Transformer encoder to enhance the position-awareness. In the Conv-Module architecture, the Conv design of TransOSV \cite{41} is referenced, and the number of output channels of the intermediate convolutional 2D layer is adjusted to increase the downsampling operation according to the style of previous CNNs, as shown in Table \ref{tab:conv}.
+The image features are subjected to feature learning by Holistic Encoder capturing the relative position information of the elements in the sequence, but it has the limitation of learning absolute position information. The signature verification task needs to be accurate to the stroke position information (e.g., stroke order, local structural differences), so after this in order to enhance some small portion of the image features, the output $\boldsymbol{x}^\mathcal{H}$ of the patch token of the Holistic Encoder is rearranged, and the flattened token is reconverted into a 2D shape $\mathbf{F}^\mathcal{H} \in \mathbb{R}^{h\times w\times D}$ to perform a convolution operation, where $h = \lfloor \frac{H/4-P+S}{S}\rfloor,w = \lfloor \frac{W/4-P+S}{S}\rfloor $. This module introduces the convolution operation to reprocess the patch features output from the Transformer encoder to enhance the position-awareness. In the Conv-Module architecture, the Conv design of TransOSV \cite{41} is referenced, and the number of output channels of the intermediate convolutional 2D layer is adjusted to increase the downsampling operation according to the style of previous CNNs, as shown in Fig. \ref{fig:conv}.
 
-
-\begin{table}[htbp]
-\caption{Conv-Module layers information}  
-\begin{center}
-\begin{tabu} to 0.8\textwidth{X[3, c]X[3, c]X[3, c]}  
-%0.8\textwidth   为设置表格宽度  
-%X[c]      表示这一列居中，所占比例为1，相当于X[1,c]  
-%X[3,c]   表示这一列居中，所占比例为3，这列的宽度是X[c]列的3倍  
-\toprule
-Layer & Kernel Size & Output feature map\\
-\midrule
-Conv2D + ReLU & $3\times 3$ & $h\times w\times d_\mathcal{C}$ \\ 
-Conv2D + ReLU & $3\times 3$ & $h\times w\times d_\mathcal{C}$ \\ 
-Max Pooling 2D & $2\times 2$ & $\frac{h}{2}\times \frac{w}{2}\times d_\mathcal{C}$ \\ 
-Conv2D + ReLU & $3\times 3$ & $\frac{h}{2}\times \frac{w}{2}\times \frac{d_\mathcal{C}}{2}$ \\ 
-Conv2D + ReLU & $3\times 3$ & $\frac{h}{2}\times \frac{w}{2}\times \frac{d_\mathcal{C}}{2}$ \\ 
-Max Pooling 2D & $2\times 2$ & $\frac{h}{4}\times \frac{w}{4}\times \frac{d_\mathcal{C}}{2}$ \\ 
-\bottomrule
-\end{tabu}
-\end{center}
-\label{tab:conv}
-\end{table}
+\begin{figure}[H]
+  \begin{center}
+      \includegraphics[scale=0.42]{figure/conv.png}
+  \end{center}
+  \caption{Conv-Module structure}
+  \label{fig:conv}
+\end{figure}
 
 Different from the traditional CNN with gradually more channels, the overall downsampling operation thinking is adopted here, and certain downsampling operations are performed on the patch features to abstractly express the local features of the feature map on the basis of integrating the local detail features, with the purpose of enhancing the generalization ability and robustness of the model. This operation is added on the basis of backbone and FPN Fusion to further strengthen the model's ability to perceive the local features of the image, strengthen the focus on the key local regions of the signature, and filter the background interference at the same time. In the Conv-Module module, each Conv2D layer operation is the same as the Conv2D layer operation in backbone, which takes the combination of Conv2D+ReLU, and after two Conv2D+ReLUs a downsampling operation, i.e., Max Pooling 2D operation, will be performed to integrate the feature maps and eliminate the non-important parts of the features to integrate and eliminate non-important parts of the feature map and enhance feature expressiveness.
 
@@ -211,14 +196,16 @@ In the model training process, the output $\mathbf{F}^\mathcal{C} = \mathcal{C}(
 
 \section{Contrast based Part Decoder}
 
+This part is an improvement on TransOSV's Contrast based Part Decoder \cite{41} for parallel computation of Cross-Attention, which references the multi-head attention computation mechanism of MHSA in Holistic Encoder. The decoder is shown in Fig. \ref{fig:decoder}.
+
 \begin{figure}[H]
   \centering
-      \includegraphics[scale=0.45]{figure/decoder.png}
+      \includegraphics[scale=0.44]{figure/decoder.png}
   \caption{Contrast based Part Decoder structure}
   \label{fig:decoder}
 \end{figure}
 
-This part is an improvement on TransOSV's Contrast based Part Decoder \cite{41} for parallel computation of Cross-Attention, which references the multi-head attention computation mechanism of MHSA in Holistic Encoder. Similar to the Holistic Encoder part, the feature maps of references and query are mapped to the $d_\mathcal{P}$ feature dimension in the input phase, followed by flattening and addition of a learnable weight $f_r^{\mathcal{P}_{cls}},f_q^{\mathcal{P}_{cls}} \in \mathbb{R}^D$, also defined as a class token, i.e., the input part is obtained as a pair of flattened feature map vectors $\boldsymbol{x}_r^\mathcal{P} = [f_r^{\mathcal{P}_{cls}}, x_r^{\mathcal{P}_1},\cdots ,x_r^{\mathcal{P}_{h' w' }} ]$, $\boldsymbol{x}_q^\mathcal{P}=[f_q^{\mathcal{P}_{cls}},x_q^{\mathcal{P}_1},\cdots,x_q^{\mathcal{P}_{h'w'} } ] \in \mathbb{R}^{h' \times w' \times (D+1)}$. Subsequently, MHSA operations are performed on $\boldsymbol{x}_r^\mathcal{P},\boldsymbol{x}_q^\mathcal{P}$ to take out the class token $\overline{f}_r^{\mathcal{P}_{cls}},\overline{f}_q^{\mathcal{P}_{cls}} \in \mathbb{R}^D$ of their respective output eigenvectors as the query matrix cross-input Cross Multi-Head Attention (CMHA).The structure of CMHA is shown in Figure 8-b shown, differs from MHA in that only the query matrix and key matrix are generated to compute their cross-attention weights $\boldsymbol{\alpha}_r,\boldsymbol{\alpha}_q$, and the final concat is replaced with a weighted average to handle the attention weights of multiple heads. For a single CMHA the output cross-attention weight $\boldsymbol{\alpha}$ is calculated as eq. \ref{eq11}.
+The decoder is similar to the Holistic Encoder part, the feature maps of references and query are mapped to the $d_\mathcal{P}$ feature dimension in the input phase, followed by flattening and addition of a learnable weight $f_r^{\mathcal{P}_{cls}},f_q^{\mathcal{P}_{cls}} \in \mathbb{R}^D$, also defined as a class token, i.e., the input part is obtained as a pair of flattened feature map vectors $\boldsymbol{x}_r^\mathcal{P} = [f_r^{\mathcal{P}_{cls}}, x_r^{\mathcal{P}_1},\cdots ,x_r^{\mathcal{P}_{h' w' }} ]$, $\boldsymbol{x}_q^\mathcal{P}=[f_q^{\mathcal{P}_{cls}},x_q^{\mathcal{P}_1},\cdots,x_q^{\mathcal{P}_{h'w'} } ] \in \mathbb{R}^{h' \times w' \times (D+1)}$. Subsequently, MHSA operations are performed on $\boldsymbol{x}_r^\mathcal{P},\boldsymbol{x}_q^\mathcal{P}$ to take out the class token $\overline{f}_r^{\mathcal{P}_{cls}},\overline{f}_q^{\mathcal{P}_{cls}} \in \mathbb{R}^D$ of their respective output eigenvectors as the query matrix cross-input Cross Multi-Head Attention (CMHA).The structure of CMHA is shown in Figure 8-b shown, differs from MHA in that only the query matrix and key matrix are generated to compute their cross-attention weights $\boldsymbol{\alpha}_r,\boldsymbol{\alpha}_q$, and the final concat is replaced with a weighted average to handle the attention weights of multiple heads. For a single CMHA the output cross-attention weight $\boldsymbol{\alpha}$ is calculated as eq. \ref{eq11}.
 
 \begin{equation}
 \label{eq11}
