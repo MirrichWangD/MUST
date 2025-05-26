@@ -38,7 +38,7 @@ Assume that the input feature map $ \mathbf{I} \in \mathbb{ R }^{ H\times W\time
 
 \begin{equation}
 \label{eq1}
-  \boldsymbol{z}(i, j, c') = \sum^{C'}_{c=1} \sum^K_{u=1} \sum^K_{v=1} = \tilde{\mathbf{W}}_{u, v, c, c'} \cdot \mathbf{I}(i\cdot \tilde{S}+u-\tilde{P}, j\cdot \tilde{S}+v - \tilde{P}, c) + \tilde{\mathbf{b}}_{c'}
+  \boldsymbol{z}(i, j, c') = \sum^{C'}_{c=1} \sum^K_{u=1} \sum^K_{v=1} = \tilde{\mathbf{W}}_{u, v, c, c'} \cdot \mathbf{I}_{i\cdot \tilde{S}+u-\tilde{P}, j\cdot \tilde{S}+v - \tilde{P}, c} + \tilde{\mathbf{b}}_{c'}
 \end{equation}
 
 In addition, in each bottleneck block, except for the last $1\times 1$ convolutional 2D layer which is followed only by the BatchNorm (BN) \cite{16} operation, each convolutional 2D layer will be followed immediately by the BN and ReLU activation function \cite{29} operation (Conv2D$\to$BN$\to$ReLU), and the spatial location $(i,j,c')$ after the BN and ReLU activation function is the pixel point values are as eq. \ref{eq2}.
@@ -57,7 +57,7 @@ The backbone is taken mainly to extract the image multi-scale feature maps, so t
   \mathcal{B}(\mathbf{I}) = \{ \mathbf{F}^{\mathcal{B}(1)}, \mathbf{F}^{\mathcal{B}(2)}, \mathbf{F}^{\mathcal{B}(3)}, \mathbf{F}^{\mathcal{B}(4)} \}
 \end{equation}
 
-where the multi-channel feature map $\mathbf{F}^\mathcal{B}(i) \in \mathbb{R}^{\frac{H}{2^{i+1}} \times \frac{W}{2^{i+1}} \times \frac{C}{2^{i-1}}},(i=1,2,3,4)$ for each scale, H,W,C denote the width, height and the number of channels of the output feature maps of layer 1, and $C=256$ when the backbone is ResNet-50), and each layer of the feature map has a twofold relationship between the channels and dimensions.
+where the multi-channel feature map $\mathbf{F}^\mathcal{B}(i) \in \mathbb{R}^{\frac{H}{2^{i+1}} \times \frac{W}{2^{i+1}} \times \frac{C}{2^{i-1}}},(i=1,2,3,4)$ for each scale, $H,W,C$ denote the width, height and the number of channels of the output feature maps of layer 1, and $C=256$ when the backbone is ResNet-50), and each layer of the feature map has a twofold relationship between the channels and dimensions.
 
 \section{FPN Fusion}
 
@@ -205,14 +205,14 @@ This part is an improvement on TransOSV's Contrast based Part Decoder \cite{41} 
   \label{fig:decoder}
 \end{figure}
 
-The decoder is similar to the Holistic Encoder part, the feature maps of references and query are mapped to the $d_\mathcal{P}$ feature dimension in the input phase, followed by flattening and addition of a learnable weight $f_r^{\mathcal{P}_{cls}},f_q^{\mathcal{P}_{cls}} \in \mathbb{R}^D$, also defined as a class token, i.e., the input part is obtained as a pair of flattened feature map vectors $\boldsymbol{x}_r^\mathcal{P} = [f_r^{\mathcal{P}_{cls}}, x_r^{\mathcal{P}_1},\cdots ,x_r^{\mathcal{P}_{h' w' }} ]$, $\boldsymbol{x}_q^\mathcal{P}=[f_q^{\mathcal{P}_{cls}},x_q^{\mathcal{P}_1},\cdots,x_q^{\mathcal{P}_{h'w'} } ] \in \mathbb{R}^{h' \times w' \times (D+1)}$. Subsequently, MHSA operations are performed on $\boldsymbol{x}_r^\mathcal{P},\boldsymbol{x}_q^\mathcal{P}$ to take out the class token $\overline{f}_r^{\mathcal{P}_{cls}},\overline{f}_q^{\mathcal{P}_{cls}} \in \mathbb{R}^D$ of their respective output eigenvectors as the query matrix cross-input Cross Multi-Head Attention (CMHA).The structure of CMHA is shown in Figure 8-b shown, differs from MHA in that only the query matrix and key matrix are generated to compute their cross-attention weights $\boldsymbol{\alpha}_r,\boldsymbol{\alpha}_q$, and the final concat is replaced with a weighted average to handle the attention weights of multiple heads. For a single CMHA the output cross-attention weight $\boldsymbol{\alpha}$ is calculated as eq. \ref{eq11}.
+The decoder is similar to the Holistic Encoder part, the feature maps of references and query are mapped to the $d_\mathcal{P}$ feature dimension in the input phase, followed by flattening and addition of a learnable weight $f_r^{\mathcal{P}_{cls}},f_q^{\mathcal{P}_{cls}} \in \mathbb{R}^{d_\mathcal{P}}$, also defined as a class token, i.e., the input part is obtained as a pair of flattened feature map vectors $\boldsymbol{x}_r^\mathcal{P} = [f_r^{\mathcal{P}_{cls}}, x_r^{\mathcal{P}_1},\cdots ,x_r^{\mathcal{P}_{h' w' }} ]$, $\boldsymbol{x}_q^\mathcal{P}=[f_q^{\mathcal{P}_{cls}},x_q^{\mathcal{P}_1},\cdots,x_q^{\mathcal{P}_{h'w'} } ] \in \mathbb{R}^{h' \times w' \times (d_\mathcal{P}+1)}$. Subsequently, MHSA operations are performed on $\boldsymbol{x}_r^\mathcal{P},\boldsymbol{x}_q^\mathcal{P}$ to take out the class token $\overline{f}_r^{\mathcal{P}_{cls}},\overline{f}_q^{\mathcal{P}_{cls}} \in \mathbb{R}^{d_\mathcal{P}}$ of their respective output eigenvectors as the query matrix cross-input Cross Multi-Head Attention (CMHA).The structure of CMHA is shown in Figure 8-b shown, differs from MHA in that only the query matrix and key matrix are generated to compute their cross-attention weights $\boldsymbol{\alpha}_r,\boldsymbol{\alpha}_q$, and the final concat is replaced with a weighted average to handle the attention weights of multiple heads. For a single CMHA the output cross-attention weight $\boldsymbol{\alpha}$ is calculated as eq. \ref{eq11}.
 
 \begin{equation}
 \label{eq11}
   \boldsymbol{\alpha}= \frac{1}{M}\sum^M_{m=1} \text{Softmax}\left( \frac{\boldsymbol{X}_\text{q}\mathbf{T}^\mathcal{P}_{m, 1}\cdot (\boldsymbol{X}_\text{k}\mathbf{T}^\mathcal{P}_{m, 2})^\mathrm{T} }{\sqrt{d_\mathcal{P}'}} \right)
 \end{equation}
 
-where $\boldsymbol{X}_\text{q},\boldsymbol{X}_k$ denote the input query and key vectors, $\mathbf{T}^\mathcal{P} \in \mathbb{R}^{M\times 2\times D\times d_k′}$ denotes the linear mapping layer weights of the input part of the CMHA. The resulting $\boldsymbol{\alpha}_r,\boldsymbol{\alpha}_q$ computation process is as eq. \ref{eq12}.
+where $\boldsymbol{X}_\text{q},\boldsymbol{X}_k$ denote the input query and key vectors, $\mathbf{T}^\mathcal{P} \in \mathbb{R}^{M\times 2\times D\times d_{\mathcal{P}}'}$ denotes the linear mapping layer weights of the input part of the CMHA. The resulting $\boldsymbol{\alpha}_r,\boldsymbol{\alpha}_q$ computation process is as eq. \ref{eq12}.
 
 \begin{equation}
 \label{eq12}
